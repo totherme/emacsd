@@ -1,0 +1,24 @@
+* Emacs Configs
+
+  These are my personal emacs configs. I'm not going to attempt to
+  maintain a stable interface -- they'll change at my whims :)
+
+  I used to do a lot of pair-programming on shared machines, and kept
+  [[https://github.com/totherme/pairing-emacs/][a minimally-surprising emacs config]] for that.
+
+* Structure
+  
+  These configs are written in a literate style using org-mode. Look
+  in the [[file:configs/][configs directory]] to find them.
+
+  Where possible I use =use-package= and =melpa= to manage my
+  dependancies. However, there are a few bits and pieces I couldn't
+  get that way, which I've had to include as copies. You'll find them
+  in the [[file:from-the-net][from-the-net directory]].
+
+  The [[file:info][info directory]] contains an info directory file, with which we
+  can plumb the mu4e into page into our overall info expereince.
+
+  [[file:magit-toolbar][Magit-toolbar]] is for if you want a toolbar button to invoke
+  magit. Right now this config disables the toolbar by default, but
+  you never know.

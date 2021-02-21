@@ -133,9 +133,7 @@
      (add-to-list 'default-frame-alist '(alpha . (85 . 70)))
    #+end_src
 
-   By default, we leave all the toolbars and menubars visible. But
-   sometimes it's nice to get rid of all that and make things quiet.
-
+   Get rid of all the superfluous GUI bits.
    #+begin_src emacs-lisp
      (defun gds-quiet-ui ()
        "Make the GUI less noisy
@@ -146,6 +144,8 @@
        (menu-bar-mode 0)
        (scroll-bar-mode 0)
        (feebleline-mode 1))
+
+     (gds-quiet-ui)
    #+end_src
 
    We can use [[https://github.com/gonewest818/dimmer.el][dimmer.el]] to make it more obvious which window/pane is
@@ -257,7 +257,7 @@
    - Still allowing us to recover all past states of the buffer, by
      visualising those states as a tree.
 
-   To undo a change, hit ~C-z~ [fn:2], ~C-/~ or ~C-_~ as normal. To
+   To undo a change, hit ~C-/~ or ~C-_~ as normal. To
    redo a change, hit ~C-?~ or ~M-_~. If you undo a few changes,
    accidentally type something (so "redo" will no longer do anything),
    and suddenly realise that you shouldn't have hit "undo" in the
@@ -292,11 +292,6 @@
    #+END_SRC
 
    
-*** TODO Add toolbar button for =redo= and ~undo-tree-visualize~
-    Having sensible undo/redo shortcuts is great, but it'd be even
-    better to have toolbar buttons for more than just the =undo= part
-    of the picture.
-
 ** Handy Tools
    Start a shell with a single keypress.
    #+BEGIN_SRC emacs-lisp
@@ -354,22 +349,6 @@
      (global-unset-key (kbd "s-k"))
    #+END_SRC
 
-** Optional windows-friendly shortcuts
-   I'd like this config to be pretty friendly to folks who're used to
-   "normal" IDEs like IntelliJ. But I also want to be able to use
-   things like the cool [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html#Rectangles][emacs rectangle editing
-   functions]]. Unfortunately, all the rectancle shortcuts begin with
-   =C-x=, which windows users will expect to mean =cut to clipboard=.
-
-   We can toggle between windows-style and emacs-style with =M-x
-   cua-mode=. If you're pairing with someone who expects windows-style
-   shortcuts, do that.
-
-*** TODO Add a toolbar button for toggling ~cua-mode~ on and off.
-    It's a pain to remember that command, so I windows logo in the
-    toolbar would probably be easier.
-
-    
 ** Enable narrowing
    [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html][Narrowing]] is a handy trick that focuses your editor on a small part
    of a potentially very large file. This can be useful when
@@ -474,9 +453,8 @@
    #+END_SRC
 
 ** Task management
-   Org-mode works great as a task-management system. I like mine to
-   sync with trello, so I can use the same task lists in android as I
-   do on my laptop -- [[file:internetting.org::*Trello][that plumbing is here]].
+   Org-mode works great as a task-management system. I can even access
+   my org files on my phone using [[http://orgzly.com/][Orgzly]].
 
    I like to have six levels of task:
    - things I want to do
@@ -520,16 +498,8 @@
       (global-set-key (kbd "C-c a") 'org-agenda)
     #+END_SRC
    
-    For this to work, we need to actually have some todo lists. Since
-    I like mine to be in sync between org and trello, that bit of [[file:internetting.org::*Trello][the
-    plumbing is here]].
-
-    Because we're using org-trello, we need to capture all tasks as
-    top-level items (trello doesn't support trees). I like to capture
-    tasks as regular =TODO= items, which may or may not have deadlines.
-
-    If you don't plan to use [[file:internetting.org::*Trello][the org-trello stuff]], you'll want to set
-    =org-default-notes-file= to something sensible for you.
+    You'll want to set =org-default-notes-file= and =org-agenda-files=
+    to something sensible for you. I do that elsewhere.
 
     #+BEGIN_SRC emacs-lisp
       (setq org-capture-templates
@@ -710,5 +680,3 @@
 [fn:1] If there are only two windows open, avy will skip the
 label-and-choose step, and just jump you straight into the other
 window.
-
-[fn:2] So long as you've enabled ~cua-mode~. See [[*Optional windows-friendly shortcuts][Optional windows-friendly shortcuts]] above.
