@@ -510,25 +510,28 @@
 
     #+BEGIN_SRC emacs-lisp
       (setq org-capture-templates
-	    '(
-	      ("t" "Todo" entry (file org-default-notes-file)
-	       "* TODO %? \n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )
-	      ("1" "Todo by tomorrow" entry (file org-default-notes-file)
-	       "* TODO %? \n  :DEADLINE: <%(gds-tomorrow)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )
-	      ("2" "Todo within a week" entry (file org-default-notes-file)
-	       "* TODO %? \n  :DEADLINE: <%(gds-next-week)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )
-	      ("3" "Todo within a fortnight" entry (file org-default-notes-file)
-	       "* TODO %? \n  :DEADLINE: <%(gds-in-a-fortnight)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )
-	      ("4" "Todo within a month" entry (file org-default-notes-file)
-	       "* TODO %? \n  :DEADLINE: <%(gds-next-month)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )
-	      ("5" "Todo within two months" entry (file org-default-notes-file)
-	       "* TODO %? \n  :DEADLINE: <%(gds-in-two-months)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
-	       )))
+            '(
+              ("t" "Todo" entry (file org-default-notes-file)
+               "* TODO %? \n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("1" "Todo by tomorrow" entry (file org-default-notes-file)
+               "* TODO %? \n  :DEADLINE: <%(gds-tomorrow)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("2" "Todo within a week" entry (file org-default-notes-file)
+               "* TODO %? \n  :DEADLINE: <%(gds-next-week)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("3" "Todo within a fortnight" entry (file org-default-notes-file)
+               "* TODO %? \n  :DEADLINE: <%(gds-in-a-fortnight)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("4" "Todo within a month" entry (file org-default-notes-file)
+               "* TODO %? \n  :DEADLINE: <%(gds-next-month)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("5" "Todo within two months" entry (file org-default-notes-file)
+               "* TODO %? \n  :DEADLINE: <%(gds-in-two-months)>\n  :PROPERTIES:\n  :END:\n  %a%(gds-org-pop-gmail-link)\n  %K"
+               )
+              ("b" "Bookmark" entry (file "~/Dropbox/Documents/Orgzly/bookmarks.org")
+               "* %:annotation \n%i"
+               :immediate-finish t)))
     #+END_SRC
 
 **** Hyperlinks and Gmail Integration
