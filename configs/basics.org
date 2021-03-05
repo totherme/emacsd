@@ -443,6 +443,13 @@
      (global-set-key (kbd "C-c l") 'org-store-link)
    #+END_SRC
 
+   To keep org-links from breaking when heading names change, we can
+   use IDs for org subtrees.
+
+   #+begin_src emacs-lisp
+     (setq org-id-link-to-org-use-id t)
+   #+end_src
+
 ** Enable time tracking
    Org-mode also has a handy [[https://orgmode.org/manual/Clocking-work-time.html][time-tracking feature]], which you can use
    to keep track of how long you spend working on different tasks.
