@@ -113,18 +113,25 @@
 
    Make autocompletion friendlier.
    #+BEGIN_SRC emacs-lisp
-     (ido-mode)
+     (ido-mode -1)
      (setq ido-auto-merge-work-directories-length -1)
    #+END_SRC
 
-   If we're in a window system, use the [[https://emacsthemes.com/themes/nyx-theme.html][nyx theme]] to make emacs'
-   colours a little prettier.
-   #+BEGIN_SRC emacs-lisp
-     (when (display-graphic-p)
-	 (use-package nyx-theme
-	   :ensure t)
+   #+begin_src emacs-lisp
+     ;; (use-package helm
+     ;;   :ensure t)
 
-	 (load-theme 'nyx t))
+     ;; (helm-mode)
+   #+end_src
+
+** TODO sort out helm, and possibly get packages from straight.el
+   :LOGBOOK:
+   - State "TODO"       from              [2021-03-09 Tue 09:34]
+   :END:
+
+   Use the wheatgrass theme to make emacs' colours a little prettier. 
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'wheatgrass t)
    #+END_SRC
 
    Enable transparency if your window manager supports it
@@ -533,6 +540,12 @@
                "* %:annotation \n%i"
                :immediate-finish t)))
     #+END_SRC
+
+    We can also use [[info:org#Protocols][the org-protocol]] to capture bookmarks from web
+    browsers and so on.
+    #+begin_src emacs-lisp
+      (require 'org-protocol)
+    #+end_src
 
 **** Hyperlinks and Gmail Integration
      One helpful feature of these capture templates is the =%a=, which
