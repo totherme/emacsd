@@ -637,6 +637,41 @@
    #+end_src
    
 
+** HTML to Org
+   Sometimes I want to take notes on the text from a webpage. It helps
+   if I can take the page source and "orgify" it.
+
+   #+begin_src emacs-lisp
+          (defun gds-html-to-org ()
+            "Turn the current buffer (loosely) from HTML to org markup.
+
+          This is very quick-and-dirty, but should be a good start."
+            (interactive)
+            (let ((bob 0)
+                  (eob (save-excursion
+                         (end-of-buffer)
+                         (point))))
+
+              (replace-regexp "<p>"
+                              "
+     "
+                              nil bob eob)
+              (replace-regexp "<strong>\\([-a-zA-Z0-9 ]*\\)</strong>"
+                              "*\\1*"
+                              nil bob eob)
+              (replace-regexp "<em>\\([-a-zA-Z0-9 ]*\\)</em>"
+                              "/\\1/"
+                              nil bob eob)
+              (replace-regexp "<a href=\"\\([-?=a-zA-Z0-9.:/_]*\\)\">"
+                              "[[\\1]["
+                              nil bob eob)
+              (replace-regexp "</a>"
+                              "]]"
+                              nil bob eob)
+              (replace-regexp "</p>"
+                              ""
+                              nil bob eob)))
+   #+end_src
 * OS Helpers
 ** Mac webcam or sound management
    When I'm on a mac, sometimes my webcam or sound stop working. The
