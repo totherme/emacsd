@@ -155,10 +155,33 @@
        (interactive)
        (tool-bar-mode 0)
        (menu-bar-mode 0)
-       (scroll-bar-mode 0)
-       (feebleline-mode 1))
+       (scroll-bar-mode 0))
 
      (gds-quiet-ui)
+   #+end_src
+
+   #+begin_src emacs-lisp
+     (defun gds-mode-line-toggle ()
+       "Toggle the modeline from normal to invisible and back"
+       (interactive)
+       (if mode-line-format
+           (setq-default mode-line-format nil)
+         (setq-default mode-line-format '("%e"
+                                          mode-line-front-space
+                                          mode-line-mule-info
+                                          mode-line-client
+                                          mode-line-modified
+                                          mode-line-remote
+                                          mode-line-frame-identification
+                                          mode-line-buffer-identification
+                                          "   "
+                                          mode-line-position
+                                          (vc-mode vc-mode)
+                                          "  "
+                                          mode-line-modes
+                                          mode-line-misc-info
+                                          mode-line-end-spaces)
+                       )))
    #+end_src
 
    We can use [[https://github.com/gonewest818/dimmer.el][dimmer.el]] to make it more obvious which window/pane is
