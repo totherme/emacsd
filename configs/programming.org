@@ -66,6 +66,20 @@
        (toggle-read-only))
      (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
    #+END_SRC
+** Docker
+   #+begin_src emacs-lisp
+     (use-package docker
+       :ensure t
+       :bind ("C-c d" . docker))
+
+     (use-package docker-compose-mode
+       :ensure t)
+   #+end_src
+*** Dockerfiles
+    #+begin_src emacs-lisp
+      (use-package dockerfile-mode
+        :ensure t)
+    #+end_src
 ** Shell Scripting
    If [[https://www.shellcheck.net/][shellcheck]] is in the ~$PATH~, we can use it with flycheck.
    #+BEGIN_SRC emacs-lisp
