@@ -23,6 +23,28 @@
        ;;; -*- lexical-binding: t -*-
      #+END_SRC
 
+** Blogging
+   I've heard good things about [[https://github.com/bastibe/org-static-blog/][org-static-blog]].
+   #+begin_src emacs-lisp
+     (use-package org-static-blog
+       :ensure t
+       :config
+       (let ((blog-config "~/workspace/kindnesscity/org-static-blog-config.el"))
+         (if (file-exists-p blog-config)
+             (load-file blog-config))))
+   #+end_src
+
+** IRC
+   Emacs comes with [[info:erc#Top][ERC]] built in.
+
+   I like to store my nickserv passwords in an encrypted
+   =~/.authinfo.gpg= file, so I don't want ERC to prompt for
+   passwords.
+
+   #+begin_src emacs-lisp
+     (setq erc-prompt-for-password nil)
+   #+end_src
+
 ** SSH Keys
    A lot of the things I work on are stored in github repos. While
    emacs can manage local clones of those repos out-of-the-box, if I
