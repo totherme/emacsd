@@ -213,6 +213,12 @@
       (setq shr-color-visible-luminance-min 80)
     #+end_src
 
+    #+begin_src emacs-lisp
+      (setq mu4e-headers-sort-field :from
+            mu4e-headers-sort-direction 'ascending
+            mu4e-headers-show-threads t)
+    #+end_src
+
     Mu4e needs you to keep your email in a local maildir folder, so
     I'm not going to try to build a generic config like I did for gnus
     and lastpass above. Instead, let's load local email config from
