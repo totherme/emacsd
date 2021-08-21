@@ -547,6 +547,20 @@
       (require 'org-protocol)
     #+end_src
 
+**** Variably detailed agendas
+     Handy toggle to show or hide nested todo items in the agenda. Bound to =s= for subtree.
+     #+begin_src emacs-lisp
+       (defun gds-org-toggle-agenda-detail ()
+         "Toggle whether to include subtrees of tasks in the org agenda."
+         (interactive)
+         (if org-agenda-todo-list-sublevels
+             (setq org-agenda-todo-list-sublevels nil)
+           (setq org-agenda-todo-list-sublevels t))
+         (org-agenda-redo))
+
+       (add-hook 'org-agenda-mode-hook
+                 (lambda () (bind-key (kbd "s") 'gds-org-toggle-agenda-detail 'org-agenda-keymap)))
+     #+end_src
 **** Hyperlinks and Gmail Integration
      One helpful feature of these capture templates is the =%a=, which
      means whenever we capture a task, it will include a hyperlink to
