@@ -2,6 +2,9 @@
 #+OPTIONS: f:t
 
 * Programming
+  :PROPERTIES:
+  :ID:       6f01c069-87cb-4a86-a2f9-3674c7268dee
+  :END:
 
   Use [[http://www.flycheck.org/en/latest/][flycheck]] for on-the-fly type checking.
 
@@ -46,6 +49,9 @@
   #+END_SRC
 
 ** Git
+   :PROPERTIES:
+   :ID:       677e9d86-2f44-45d7-bc50-c24c8663495d
+   :END:
    #+begin_src emacs-lisp
      (use-package git-gutter
        :ensure t
@@ -55,6 +61,9 @@
        (add-hook 'after-init-hook 'global-git-gutter-mode))
    #+end_src
 ** Compilation
+   :PROPERTIES:
+   :ID:       8526b5cd-97dc-4f47-9678-dedde43009bb
+   :END:
    Compilation buffers aren't coloured by default. This means ginkgo
    output is almost impossible to read. Let's try to fix that.
 
@@ -67,6 +76,9 @@
      (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
    #+END_SRC
 ** Docker
+   :PROPERTIES:
+   :ID:       fa02224e-c82b-4dc6-bdd9-c3d1c5644469
+   :END:
    #+begin_src emacs-lisp
      (use-package docker
        :ensure t
@@ -76,17 +88,26 @@
        :ensure t)
    #+end_src
 *** Dockerfiles
+    :PROPERTIES:
+    :ID:       081ea326-8bcf-442f-9a37-deb7f8ac7e37
+    :END:
     #+begin_src emacs-lisp
       (use-package dockerfile-mode
         :ensure t)
     #+end_src
 ** Shell Scripting
+   :PROPERTIES:
+   :ID:       48c75d72-7cd3-42a3-9245-2e8d14ec6963
+   :END:
    If [[https://www.shellcheck.net/][shellcheck]] is in the ~$PATH~, we can use it with flycheck.
    #+BEGIN_SRC emacs-lisp
    (add-hook 'sh-mode-hook 'flycheck-mode)
    #+END_SRC
 
 ** Elisp
+   :PROPERTIES:
+   :ID:       0236879d-2823-406c-aa10-472496f45918
+   :END:
    Use paredit to make it harder to accidentally write syntactically
    incorrect lisp.
    #+BEGIN_SRC emacs-lisp
@@ -112,6 +133,9 @@
 ** Golang
 
 *** Basics
+    :PROPERTIES:
+    :ID:       c8296307-325d-462d-8f30-33433e932c42
+    :END:
     The emacs [[https://github.com/dominikh/go-mode.el][go mode]] will provide a bunch of useful things on its own. Including:
     - integration with ~gofmt~
     - integration with ~godoc~
@@ -145,6 +169,9 @@
 
     
 *** GOPATH wrangling
+    :PROPERTIES:
+    :ID:       3ad33aca-715f-4f02-946f-9dec3b3785f4
+    :END:
 
     If you start emacs from a shell which has a ~$GOPATH~ already set
     in it, we'll just use that. However, sometimes when emacs is
@@ -175,6 +202,9 @@
     go-set-project~ to manage your ~$GOPATH~.
 
 *** Key and Mouse Bindings
+    :PROPERTIES:
+    :ID:       387b269b-6535-41f6-b663-e61a0c0cccdb
+    :END:
     We need a little setup to enable IDE-like control-click for code
     introspection. First a function to move the cursor to where you
     just clicked, and then perform the introspection.
@@ -215,6 +245,9 @@
     #+END_SRC
 
 *** On-the-fly typechecking and docs
+    :PROPERTIES:
+    :ID:       cdaec022-e705-4419-81ca-eadef848b262
+    :END:
     The [[https://github.com/dougm/goflymake][go backend for flymake]] (to give us on-the-fly typechecking)
     isn't available in MELPA, so we provide it as a git submodule. The
     [[https://github.com/syohex/emacs-go-eldoc/tree/cbbd2ea1e94a36004432a9ac61414cb5a95a39bd][go backend]] for [[https://www.emacswiki.org/emacs/ElDoc][eldoc]] (which shows the type and argument list of
@@ -232,6 +265,9 @@
     #+END_SRC
 
 *** Autocompletion
+    :PROPERTIES:
+    :ID:       f0839e51-f95b-4cb4-829b-a5f2798f21ca
+    :END:
     Use the company-go backend to provide smart (type-driven) autocompletion for go.
     #+BEGIN_SRC emacs-lisp
       (use-package company-go
@@ -256,6 +292,9 @@
     #+END_SRC
 
 *** Testing
+    :PROPERTIES:
+    :ID:       5223d219-4d04-4e40-b2fd-8a33782a6da4
+    :END:
     We can use [[https://github.com/nlamirault/gotest.el][gotest]] to run tests in a fine-grained way.
     #+BEGIN_SRC emacs-lisp
       (use-package gotest
@@ -274,6 +313,9 @@
       (define-key go-mode-map (kbd "C-x c") 'go-test-current-coverage)
     #+END_SRC
 ** Markdown
+   :PROPERTIES:
+   :ID:       e14e1adc-97cd-4b26-8ede-7f71ee795c08
+   :END:
 
    Use [[https://jblevins.org/projects/markdown-mode/][markdown mode]] for editing markdown. 
    #+BEGIN_SRC emacs-lisp
@@ -282,6 +324,9 @@
    #+END_SRC
 
 ** YAML
+   :PROPERTIES:
+   :ID:       23533b15-b0b1-47e3-b6c6-a5bf643feaf5
+   :END:
 
    Use [[https://www.emacswiki.org/emacs/YamlMode][yaml mode]] for editing yaml.
    #+BEGIN_SRC emacs-lisp
@@ -301,6 +346,9 @@
    global.
 
 ** JSON
+   :PROPERTIES:
+   :ID:       c4a80f6e-f126-4bfc-a9bb-a66be12b2111
+   :END:
 
    Use [[https://github.com/joshwnj/json-mode][json mode]] for editing json.
    #+BEGIN_SRC emacs-lisp
@@ -309,6 +357,9 @@
    #+END_SRC
 
 ** Ruby
+   :PROPERTIES:
+   :ID:       f412ddeb-eab6-4b8f-bf42-c9a227ac79d2
+   :END:
 
    Use [[https://github.com/zenspider/enhanced-ruby-mode][enhanced ruby mode]] for better colouring and syntax checking.
    #+BEGIN_SRC emacs-lisp
@@ -364,6 +415,9 @@
    #+END_SRC
 
 *** Mouse bindings
+    :PROPERTIES:
+    :ID:       185b8b70-58f5-4774-b05c-1ae1970239d0
+    :END:
     Just as in golang, we can bind control-click to code introspection.
 
     #+BEGIN_SRC emacs-lisp
@@ -387,6 +441,9 @@
      section. Extract it.
 
 ** Haskell
+   :PROPERTIES:
+   :ID:       f8e5f705-e252-45b4-904d-1b2a0de0b920
+   :END:
    First, we'll definitely need the basic haskell mode that other
    haskell goodies are built on.
    #+BEGIN_SRC emacs-lisp
@@ -394,17 +451,16 @@
        :ensure t)
    #+END_SRC
 
-   Now we want some IDE-like features. There are a few options here,
-   but recent popular ones appear to be [[http://commercialhaskell.github.io/intero/][Intero]] and [[https://github.com/jyp/dante][Dante]]. It seems
-   that Intero works best if your haskell project happens to use
-   stack[fn:1], but Dante is better for casual scripting with ghci or just
-   cabal[fn:2].
-
-   Let's make Dante our default, but retain the option to use Intero
-   if we want it.
+   Now we want some IDE-like features. I used to use [[http://commercialhaskell.github.io/intero/][Intero]] for
+   stack[fn:1], and [[https://github.com/jyp/dante][Dante]] for casual scripting with ghci or just
+   cabal[fn:2]. However, it looks like Intero hasn't been updated for
+   a couple of years (the [[https://travis-ci.org/github/chrisdone/intero/jobs/641672495][last CI run]] seems to have been 2 years ago)
+   and has vanished from melpa.
 
 *** Dante
-
+    :PROPERTIES:
+    :ID:       7ae3009c-e954-4f37-80be-6a6eba5ece76
+    :END:
     This snippit is copied verbatim from the [[https://github.com/jyp/dante][Dante README]].
 
     #+BEGIN_SRC emacs-lisp
@@ -425,44 +481,10 @@
                       '(warning . haskell-hlint))))
     #+END_SRC
 
-*** Intero
-    First, we should ensure that intero is available if we want it,
-    and that its [[https://hackage.haskell.org/package/hlint][hlint]] function is turned on.
-    #+BEGIN_SRC emacs-lisp
-      (use-package intero
-        :ensure t
-        :config
-        (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
-    #+END_SRC
-
-*** Switching between them
-    To switch from Dante to Intero and back, we provide
-    ~gds-haskell-switch-to-intero~ and
-    ~gds-haskell-switch-to-dante~. These will have no effect on any
-    currently open haskell buffers, but will allow you to switch the
-    defaults for any buffers you open in future.
-
-    So the workflow for editing a stack project is:
-    - ~M-x gds-haskell-switch-to-intero~
-    - ~C-x C-f ~/my-stack-project/main.hs~ (or similar)
-
-    #+BEGIN_SRC emacs-lisp
-      (defun gds-haskell-switch-to-intero ()
-        "Use Intero instead of Dante for all future haskell editing."
-        (interactive)
-        (remove-hook 'haskell-mode-hook 'dante-mode)
-        (remove-hook 'haskell-mode-hook 'flycheck-mode)
-        (add-hook 'haskell-mode-hook 'intero-mode))
-
-      (defun gds-haskell-switch-to-dante ()
-        "Use Dante instead of Intero for all future haskell editing."
-        (interactive)
-        (remove-hook 'haskell-mode-hook 'intero-mode)
-        (add-hook 'haskell-mode-hook 'dante-mode)
-        (add-hook 'haskell-mode-hook 'flycheck-mode))
-    #+END_SRC
-
 ** LaTeX
+   :PROPERTIES:
+   :ID:       36e67f1e-137c-4ca3-9fca-eda0569663f2
+   :END:
    #+begin_src emacs-lisp
      (use-package latex-extra
        :ensure t
