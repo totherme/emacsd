@@ -430,9 +430,9 @@
    on. You can read about them [[https://orgmode.org/manual/Structure-Templates.html#Structure-Templates][on the web]], or in your [[info:org#Structure Templates][local org info
    page]].
 
-   I like to enable inline snippet expansion:
+   I like to enable inline snippet expansion. In some versions of emacs, this means loading an extra package.
    #+begin_src emacs-lisp
-     (require 'org-tempo)
+     (require 'org-tempo nil t)
    #+end_src
 
 ** Export to more formats
