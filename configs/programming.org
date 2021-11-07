@@ -52,6 +52,8 @@
    :PROPERTIES:
    :ID:       677e9d86-2f44-45d7-bc50-c24c8663495d
    :END:
+
+   Git gutter shows me what has changed, and what hasn't in a source file.
    #+begin_src emacs-lisp
      (use-package git-gutter
        :ensure t
@@ -59,6 +61,14 @@
        :delight
        :init
        (add-hook 'after-init-hook 'global-git-gutter-mode))
+   #+end_src
+
+   Git link lets me grab a github link for the line at point
+   #+begin_src emacs-lisp
+     (use-package git-link
+       :ensure t
+       :config
+       (global-set-key (kbd "C-c g l") 'git-link))
    #+end_src
 ** Compilation
    :PROPERTIES:
@@ -75,6 +85,8 @@
        (toggle-read-only))
      (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
    #+END_SRC
+** Searching
+   
 ** Docker
    :PROPERTIES:
    :ID:       fa02224e-c82b-4dc6-bdd9-c3d1c5644469
