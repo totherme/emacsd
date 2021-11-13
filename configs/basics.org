@@ -497,6 +497,20 @@
      (org-clock-persistence-insinuate)
    #+END_SRC
 
+** Roam
+   :PROPERTIES:
+   :ID:       d31edec5-b668-49aa-8036-466dae135cf7
+   :END:
+   Org-roam is a note taking system.
+
+   #+begin_src emacs-lisp
+     (use-package org-roam
+       :ensure t
+       :config
+       (setq org-roam-directory (file-truename "~/Dropbox/Documents/Roam"))
+       (org-roam-db-autosync-mode))
+   #+end_src
+
 ** Task management
    Org-mode works great as a task-management system. I can even access
    my org files on my phone using [[http://orgzly.com/][Orgzly]].
