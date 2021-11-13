@@ -338,12 +338,14 @@
    - If we open two directory windows next to each other and ask to
      move a file from one of them, the other will be the default
      target.
+   - List files with human-readable sizes
    - Hit ~r~ on a directory window in order to edit filenames and
      permissions like regular text.
    #+BEGIN_SRC emacs-lisp
      (require 'wdired)
      (setq
       dired-dwim-target t
+      dired-listing-switches "-alh"
       wdired-allow-to-change-permissions t)
      (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
    #+END_SRC
