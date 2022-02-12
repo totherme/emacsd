@@ -329,3 +329,11 @@
        (shell-command-to-string
 	(format "lpass show %s --notes" note-path)))
    #+END_SRC
+* Twitter
+  #+begin_src emacs-lisp
+        (use-package twittering-mode
+          :ensure t
+          :config
+          (setq twittering-icon-mode nil))
+  #+end_src
+
