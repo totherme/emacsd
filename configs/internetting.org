@@ -337,3 +337,20 @@
           (setq twittering-icon-mode nil))
   #+end_src
 
+* Reddit
+  There's a reddit emacs package [[https://github.com/ahungry/md4rd][on github here]]. According to the
+  installation instructions as I write this, it needs to be cloned
+  locally, and included manually. Hence the check below to see if
+  =~/workspace/md4rd= exists.
+
+  #+begin_src emacs-lisp
+    (use-package hierarchy
+      :ensure t)
+    (use-package tree-mode
+      :ensure t)
+
+    (if (file-exists-p "~/workspace/md4rd")
+        (progn
+          (add-to-list 'load-path "~/workspace/md4rd")
+          (require 'md4rd)))
+  #+end_src
