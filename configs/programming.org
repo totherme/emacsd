@@ -324,6 +324,14 @@
       (define-key go-mode-map (kbd "C-x x") 'go-run)
       (define-key go-mode-map (kbd "C-x c") 'go-test-current-coverage)
     #+END_SRC
+** Rust
+   :PROPERTIES:
+   :ID:       07a52487-bcd7-417d-8258-e17acdda874d
+   :END:
+   #+begin_src emacs-lisp
+     (use-package rust-mode
+       :ensure t)
+   #+end_src
 ** Markdown
    :PROPERTIES:
    :ID:       e14e1adc-97cd-4b26-8ede-7f71ee795c08
