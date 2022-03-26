@@ -274,60 +274,6 @@
 	 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
    #+END_SRC
 
-** Sort out emacs' crazy undo/redo system
-   Quoting from the [[http://www.dr-qubit.org/undo-tree.html][undo-tree web page]]:
-   #+BEGIN_QUOTE
-   Emacs has a powerful undo system. Unlike the standard undo/redo
-   system in most software, it allows you to recover any past state of
-   a buffer (whereas the standard undo/redo system can lose past
-   states as soon as you redo). However, this power comes at a price:
-   many people find Emacs' undo system confusing and difficult to use
-   #+END_QUOTE
-
-   I agree. To get an idea of how non-intuitive the vanilla-emacs undo system
-   is, note that there is a keybinding for ~undo~, but no keybinding
-   for ~redo~.
-
-   The undo-tree package solves the problem by:
-   - Having a redo function
-   - Still allowing us to recover all past states of the buffer, by
-     visualising those states as a tree.
-
-   To undo a change, hit ~C-/~ or ~C-_~ as normal. To
-   redo a change, hit ~C-?~ or ~M-_~. If you undo a few changes,
-   accidentally type something (so "redo" will no longer do anything),
-   and suddenly realise that you shouldn't have hit "undo" in the
-   first place, then hit ~C-x u~. This will show you a tree
-   representation of the changes you just made, undid, and the new
-   timeline you created when you accidentally typed whatever it was
-   you typed. You can move around in this branching timeline by
-   clicking, or using standard emacs navigation keys.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :ensure t
-       :delight)
-     (global-undo-tree-mode)
-       ;; https://www.emacswiki.org/emacs/UndoTree
-   #+END_SRC
-
-   Out of the box, undo-tree doesn't play nicely with the line numbers
-   we might be relying on for pair-programming. To fix this (as [[https://www.emacswiki.org/emacs/UndoTree][suggested here]]), we can
-   add a bunch of advice around the undo-tree functions which force
-   the line numbers to update themselves.
-   #+BEGIN_SRC emacs-lisp
-     (when (< emacs-major-version 26)
-       (defun undo-tree-visualizer-update-linum (&rest args)
-	 (linum-update undo-tree-visualizer-parent-buffer))
-       (advice-add 'undo-tree-visualize-undo :after #'undo-tree-visualizer-update-linum)
-       (advice-add 'undo-tree-visualize-redo :after #'undo-tree-visualizer-update-linum)
-       (advice-add 'undo-tree-visualize-undo-to-x :after #'undo-tree-visualizer-update-linum)
-       (advice-add 'undo-tree-visualize-redo-to-x :after #'undo-tree-visualizer-update-linum)
-       (advice-add 'undo-tree-visualizer-mouse-set :after #'undo-tree-visualizer-update-linum)
-       (advice-add 'undo-tree-visualizer-set :after #'undo-tree-visualizer-update-linum))
-   #+END_SRC
-
-   
 ** Handy Tools
    Start a shell with a single keypress.
    #+BEGIN_SRC emacs-lisp
