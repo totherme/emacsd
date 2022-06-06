@@ -48,6 +48,15 @@
       (add-hook 'after-init-hook 'yas-global-mode))  
   #+END_SRC
 
+  Use [[https://github.com/wbolster/emacs-direnv][direnv mode]] for keeping environment variables in separate
+  projects separate from each other.
+  #+begin_src emacs-lisp
+    (use-package direnv
+      :ensure t
+      :config
+      (direnv-mode))
+  #+end_src
+
 ** Git
    :PROPERTIES:
    :ID:       677e9d86-2f44-45d7-bc50-c24c8663495d
