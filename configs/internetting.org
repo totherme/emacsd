@@ -17,6 +17,9 @@
   need to create in order to make them work for you, see below.
 
 **** Prerequisites
+     :PROPERTIES:
+     :ID:       8738ce15-3281-4cca-9198-ae6e37fd57c6
+     :END:
      A lot of the elisp in this file requires lexical binding. We should
      enable it up front, before getting into the meat of things.
      #+BEGIN_SRC emacs-lisp
@@ -24,6 +27,9 @@
      #+END_SRC
 
 ** Blogging
+   :PROPERTIES:
+   :ID:       983547e1-5b1d-4e37-bbec-c494d2af7db6
+   :END:
    I've heard good things about [[https://github.com/bastibe/org-static-blog/][org-static-blog]].
    #+begin_src emacs-lisp
      (use-package org-static-blog
@@ -35,6 +41,9 @@
    #+end_src
 
 ** IRC
+   :PROPERTIES:
+   :ID:       8833e16e-6b1b-468f-8354-df3c44a83400
+   :END:
    Emacs comes with [[info:erc#Top][ERC]] built in.
 
    I like to store my nickserv passwords in an encrypted
@@ -46,6 +55,9 @@
    #+end_src
 
 ** SSH Keys
+   :PROPERTIES:
+   :ID:       6b577bff-8fa1-4077-b6eb-46dae361bfc2
+   :END:
    A lot of the things I work on are stored in github repos. While
    emacs can manage local clones of those repos out-of-the-box, if I
    want to be able to push, I'll need to load my creds.
@@ -141,6 +153,9 @@
 
 ** Email with Mu4E
 *** Installing Mu and Mu4E
+    :PROPERTIES:
+    :ID:       9d50b9b8-42c4-4ec9-8cd5-98018f69ea38
+    :END:
     If we're on a system with =snap= (such as ubuntu), then we can use snap to install
     =maildir-utils=:
 
@@ -157,6 +172,9 @@
 	    (require 'mu4e)))
     #+end_src
 *** Installing the Mu4E info page
+    :PROPERTIES:
+    :ID:       0d08a0c3-4139-4107-9a8b-d0fdfece6f06
+    :END:
 
     If we have the =maildir-utils= snap, then the info page we want is
     in =/snap/maildir-utils/current/share/info=. To access this info
@@ -201,6 +219,9 @@
       export INFOPATH="$INFOPATH:$HOME/.emacs.d/info"
     #+end_src
 *** Clean up executive emails
+    :PROPERTIES:
+    :ID:       ddf9a832-e7f9-4e0d-8c89-4aaa19e88e15
+    :END:
     A lot of executive emails in outlook seem to be full of tables,
     which get displayed in mu4e as really long space-padded
     lines. This is annoying, and breaks up our paragraphs.
@@ -217,6 +238,9 @@
         (beginning-of-buffer))
     #+end_src
 *** Actual configuration
+    :PROPERTIES:
+    :ID:       069c68c1-0394-48ee-83ab-7c7639abe835
+    :END:
 
     When viewing html email, we can make =tab= and =backtab= keys
     cycle through hyperlinks.
@@ -254,6 +278,9 @@
     To figure out what to put in there, I refer you to the excellent
     [[info:mu4e][mu4e info page]] that you should now have access to.
 ** Lastpass
+   :PROPERTIES:
+   :ID:       0589fc23-8dab-49a5-91f4-5407f946bf47
+   :END:
 
    Of course in order to do anything on the internet, we'll need
    credentials. And storing those in a config file in git would be
@@ -330,6 +357,9 @@
 	(format "lpass show %s --notes" note-path)))
    #+END_SRC
 * Twitter
+  :PROPERTIES:
+  :ID:       5f5d3df5-93dc-4fe5-b9bf-0237f7b6e66c
+  :END:
   #+begin_src emacs-lisp
         (use-package twittering-mode
           :ensure t
@@ -338,6 +368,9 @@
   #+end_src
 
 * Reddit
+  :PROPERTIES:
+  :ID:       e2e30881-1640-4a60-970d-0506d856779e
+  :END:
   There's a reddit emacs package [[https://github.com/ahungry/md4rd][on github here]]. According to the
   installation instructions as I write this, it needs to be cloned
   locally, and included manually. Hence the check below to see if
