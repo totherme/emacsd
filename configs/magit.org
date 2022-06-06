@@ -36,6 +36,10 @@
    If you don't tell us which commit method to use, we'll guess based
    on the contents of =~/.gitconfig=.
 
+   Note that this works on the assumption that you use =git duet
+   --global=. I personally like to have ~export
+   GIT_DUET_GLOBAL="true"~ in my =.bashrc=.
+
    #+BEGIN_SRC emacs-lisp
      (defun git-duet-should-we-use-it? ()
        "Decide whether or not to use git-duet.
