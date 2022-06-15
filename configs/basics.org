@@ -182,6 +182,28 @@
     think that inter-buffer (global) movement is more valuable than
     the local movement, we map both sets of shortcuts to that.
 
+*** Window navigation
+Emacs [[info:emacs#Window Convenience][comes with a thing called windmove]], which makes it easier to
+move between various windows (or perhaps "panels" or "splits" to use
+more modern GUI terminology). We can enable it like so:
+
+#+begin_src emacs-lisp
+  (windmove-display-default-keybindings)
+#+end_src
+
+The new behaviour is that =S-<right>= moves the cursor to the window on the right and so on.
+
+These keybindings [[info:org#Conflicts][clash with some org-mode bindings]]. For example, when
+the cursor is over a date in org-mode, we want =S-<right>= to advance
+the date by one day. The suggested fix is as follows:
+
+#+begin_src emacs-lisp
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+#+end_src
+
 ** Multiple-cursor editing
    Allow editing with [[https://github.com/magnars/multiple-cursors.el][multple cursors]]. There's a good [[http://emacsrocks.com/e13.html][introduction video here]].
    #+BEGIN_SRC emacs-lisp
