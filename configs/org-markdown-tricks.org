@@ -1,0 +1,53 @@
+* Org Markdown Export Tricks
+
+Sometimes I want to export markdown that is going to be interpreted by something that:
+- Doesn't understand HTML
+- Prefers using =```= to denote code blocks, rather than using indentation.
+
+These functions remove extra HTML anchor blocks that org adds to the
+markdown, and change the code snippit style from indentation to =```=
+style.
+
+#+begin_src emacs-lisp
+  (defun gds-md-remove-section-anchors ()
+    (beginning-of-buffer)
+    (replace-regexp "^<a id=\"org.*$" ""))
+
+  (defun gds-md-find-next-code-block ()
+    (if (search-forward-regexp "^
+      [^-]" nil t)
+        (progn
+          (beginning-of-line)
+          t)
+      nil))
+
+  (defun gds-md-find-end-of-current-code-block ()
+    (search-forward-regexp "^
+  [^ ]")
+    (beginning-of-line)
+    (previous-line))
+
+  (defun gds-md-simplify-code-blocks ()
+    (beginning-of-buffer)
+    (while (gds-md-find-next-code-block)
+      (insert "```
+  ")
+      (gds-md-find-end-of-current-code-block)
+      (insert "```
+  ")))
+
+  (defun gds-md-simplify-entities ()
+    (beginning-of-buffer)
+    (replace-string "&#x2013;" "--")
+    (beginning-of-buffer)
+    (replace-string "&#x2026;" "..."))
+
+  (defun gds-simplify-markdown ()
+    (interactive)
+    (gds-md-remove-section-anchors)
+    (gds-md-simplify-entities)
+    (gds-md-simplify-code-blocks))
+#+end_src
+
+#+RESULTS:
+: gds-simplify-markdown
