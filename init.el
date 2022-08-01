@@ -2,11 +2,4 @@
 ;; .gitignore
 (setq custom-file "~/.emacs.d/emacs-custom.el")
 
-(org-babel-load-file "~/.emacs.d/configs/basics.org")
-
-(org-babel-load-file "~/.emacs.d/configs/magit.org")
-
-(org-babel-load-file "~/.emacs.d/configs/programming.org")
-
-(org-babel-load-file "~/.emacs.d/configs/internetting.org")
-(put 'upcase-region 'disabled nil)
+(org-babel-load-file "~/.emacs.d/README.org")

@@ -1,15 +1,11 @@
+README.el
 emacs-custom.el
 /.mc-lists.el
 elpa
 auto-save-list
 /ido.last
-/emacs-custom.el~
-/configs/basics.el
-/configs/magit.el
-/configs/programming.el
 var
 /projectile-bookmarks.eld
-/configs/internetting.el
 /emojis/
 /org-clock-save.el
 /network-security.data

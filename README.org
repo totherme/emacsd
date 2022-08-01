@@ -1,24 +1,232 @@
 * Emacs Configs
 
-  These are my personal emacs configs. I'm not going to attempt to
-  maintain a stable interface -- they'll change at my whims :)
+These are my personal emacs configs. In this branch, I'm trying a
+minimalist setup, where every configuration choice is driven by a
+use-case in this document.
 
-  I used to do a lot of pair-programming on shared machines, and kept
-  [[https://github.com/totherme/pairing-emacs/][a minimally-surprising emacs config]] for that.
+This document is primarily. intended to be read in emacs, so some
+hyperlinks may not work if you're reading in a web browser. For
+example, I often link to internal emacs docs, help pages, and info
+pages.
 
-* Structure
-  
-  These configs are written in a literate style using org-mode. Look
-  in the [[file:configs/][configs directory]] to find them.
+** Use Cases
+*** Writing this document in org-mode
+Meta, I know.
 
-  Where possible I use =use-package= and =melpa= to manage my
-  dependancies. However, there are a few bits and pieces I couldn't
-  get that way, which I've had to include as copies. You'll find them
-  in the [[file:from-the-net][from-the-net directory]].
+To get comfortable to start writing, I needed a few little things:
+- Use a dark theme
+- Use a larger font
+- GUI elements: get rid of ones I don't like, and add ones I like
+- Make org-mode consistent across emacs versions
+- Turn on word-wrapping and spell checking
+- Make org-mode source snippets work
 
-  The [[file:info][info directory]] contains an info directory file, with which we
-  can plumb the mu4e into page into our overall info expereince.
+Once I'm writing, I need two more:
+- More sustainable org-mode hyperlinking
+- Magit: an easy way to check things into git
 
-  [[file:magit-toolbar][Magit-toolbar]] is for if you want a toolbar button to invoke
-  magit. Right now this config disables the toolbar by default, but
-  you never know.
+**** Use a dark theme
+Emacs in the GUI uses a light theme by default. I prefer a dark
+one. The =wheatgrass= theme comes with emacs, and is dark.
+
+#+begin_src elisp
+(load-theme 'wheatgrass t)
+#+end_src
+
+The optional =t= means we don't ask the user interactively to check
+that it's ok to run the elisp in the theme code. I'm trusting it
+because it ships with emacs.
+
+**** Use a larger font
+I'm currently writing this on a 2008 Dell Latitude E6500, and the
+default font on this screen is a bit small for me.
+
+In future I will likely want to do something more clever here, but for
+now, let's just assume that everyone likes bigger fonts.
+
+The following is suggested [[info:emacs#Fonts][in the manual here]]:
+
+#+begin_src elisp
+  (add-to-list 'default-frame-alist
+	       '(font . "DejaVu Sans Mono-14"))
+#+end_src
+
+**** GUI elements
+When I'm writing, I prefer to use my whole screen for emacs, and to
+interact using the keyboard. For me, the scroll bar, menu bar, and
+tool bar take up space that I'd rather use for the content of what I'm
+working on.
+
+I can turn them off like this:
+
+#+begin_src elisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+Since I'm using my whole screen for emacs, I usually can't see my
+system clock. So I like to display one on the emacs modeline.
+
+#+begin_src elisp
+(display-time-mode t)
+#+end_src
+
+I also like to see line numbers by the side of the screen, and the
+column number in my mode-line. The line numbers are great when
+collaborating, so folks can say things like "you've got a typo on line
+30", and the column numbers are occasionally useful for formatting
+things.
+
+#+begin_src elisp
+  (global-display-line-numbers-mode t)
+  (column-number-mode t)
+#+end_src
+
+**** Make org-mode consistent across emacs versions
+The machine I'm beginning this document on has the latest slackware
+emacs package installed -- and that is version 27.2. On my ubuntu work
+machine, I have emacs 28.
+
+Starting in emacs 28, the default value of the =org-adapt-indentation=
+variable has changed from =t= to (IIRC) =nil=. I prefer the new
+behaviour, so that's what I'm setting here.
+
+#+begin_src elisp
+(setq org-adapt-indentation nil)
+#+end_src
+
+This means that the text paragraphs in this document won't try to
+indent themselves to match the heading level. They will all stick at 0
+indentation by default. This makes copy-pasting from one section to
+another much easier.
+
+**** Turn on word-wrapping and spell-checking
+
+When editing text, or text-derived things like markdown or org files,
+I like to have a sensible word-wrap, and a spell checker.
+
+In emacs, word wrapping is provided by a function called
+=auto-fill-mode=, and spellchecking by =flyspell-mode=. We can add
+these to all text and text-derived modes by using the =text-mode-hook=.
+
+#+begin_src elisp
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+  (ispell-change-dictionary "british" t) ; of course
+  (add-hook 'text-mode-hook 'flyspell-mode)
+#+end_src
+
+Since markdown-mode, org-mode, latex-mode and so on are all derived
+from text-mode, this will do the job for all those sorts of files too.
+
+The =t= in =ispell-change-dictionary= is so that we use a British
+dictionary globally, not just in a single buffer. 
+
+***** Historical Detour
+
+****** Why =flyspell-mode= and not =spellcheck-mode= or similar?
+This is because emacs has had a spell-checker for a very long time --
+far longer than it's been practical to keep one running in the
+background as we enter text. 
+
+When I started using emacs, the usual way to spellcheck the current
+buffer was with =ispell-buffer=, which shelled out to the unix
+=ispell= program (and later, =aspell=, because people like to write
+improved versions of things) to do the actual checking. In fact, I
+still sometimes use the command =M-$= (=ispell-word=) to check the
+spelling of a single word if I'm unsure.
+
+The emacs help system [[help:ispell-buffer][tells me]] that =ispell-buffer= was "[p]robably
+introduced at or before Emacs version 19.20", and links to [[file:/usr/share/emacs/27.2/etc/NEWS.19::To check the entire current buffer, use M-x ispell-buffer.][the
+relevant section of the emacs news file for version 19]]. It's worth
+noting that before =ispell-buffer= was introduced, the =M-$= command
+already existed, and used the unix =spell= program. I guess =ispell=
+stands for =interactive spell=, and provides a better UX on the
+command line.
+
+Anyway, since the default way to check spelling used to be with
+=ispell=, the idea of spell-checking on the fly sounds like it ought
+to be called =flyspell=.
+
+****** Why =auto-fill-mode= and not =word-wrap-mode= or similar?
+Because auto-fill-mode doesn't /just/ wrap words. It can also do other
+typesetting tricks.
+
+The easiest way to see this in action is to play with =M-q=
+(=fill-paragraph=). Start by writing some poorly formatted text:
+
+#+begin_src fundamental
+  Here is
+  some text
+     which I haven't formatted in the usual
+  way.
+  If this were     clever poetry, perhaps this would be excusable. But
+  it's not.   It's
+  just me writing text with                 weird
+  spacing and
+  line   breaks.
+#+end_src
+
+Now, if you put your cursor anywhere in that text, and hit =M-q=, this
+happens:
+#+begin_src fundamental
+  Here is some text which I haven't formatted in the usual way.  If this
+  were clever poetry, perhaps this would be excusable. But it's not.
+  It's just me writing text with weird spacing and line breaks.
+#+end_src
+
+This is very handy. Notice that we haven't just removed the line
+breaks and re-wrapped the text. We've got rid of *all* the whitespace,
+and re-wrapped the text. This still isn't quite =filling= though. 
+
+Now put the cursor anywhere in that text, and hit =C-u M-$=:
+#+begin_src fundamental
+  Here is some text which I haven't formatted in the usual way.  If this
+  were clever  poetry, perhaps  this would be  excusable. But  it's not.
+  It's just me writing text with weird spacing and line breaks.
+#+end_src
+
+Now the text has not only been wrapped, it has also been
+*justified*. See how the two full lines end at exactly the same
+column? This looks a little more like newspaper print.
+
+If we were assembling this text on a printing press, then to achieve
+the /justified/ look, we would have to artistically fill in the gaps
+between words with whitespace. This is "filling". Hence
+=fill-paragraph=, and =auto-fill-mode=.
+
+There is lots more cleverness that emacs can do with filling. You can
+read about it [[info:emacs#Filling][in the manual here]].
+
+**** Make org-mode source snippets work
+When writing a file like this, I find myself repeating the following
+boilerplate quite a lot:
+
+#+begin_example
+#+begin_src elisp
+... some code or other ...
+#+end_src
+#+end_example
+
+That can get quite dull. Emacs provides the command =C-c C-,= (or
+=org-insert-structure-template=) to help out with that boilerplate,
+but it's even better to be able to use snippets like =< s <TAB>= to
+create a code block.
+
+To enable those snippets, we can require =org-tempo=:
+
+#+begin_src elisp
+(require 'org-tempo nil t)
+#+end_src
+
+In some versions of emacs (I think 28+ ?), this functionality is baked
+into org-mode itself, so the require will fail. This is why we add the
+=t= at the end of the call. That corresponds to the =NOERROR=
+parameter of the =require= function. This way our startup isn't
+aborted in the even that we never needed this line in the first place.
+
+Read more about org structure templates and snippets in [[info:org#Structure Templates][the manual here]].
+
+**** TODO More sustainable org-mode hyperlinking
+
+**** TODO Magit: an easy way to check things into git
