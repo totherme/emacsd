@@ -10,6 +10,59 @@ example, I often link to internal emacs docs, help pages, and info
 pages.
 
 ** Use Cases
+*** Installing emacs packages
+:PROPERTIES:
+:ID:       52f1be7b-2b15-4b4c-84fa-ece5e2437c7b
+:END:
+While emacs ships with an enormous amount of cool stuff out of the
+box, there are some extras we might want to install as well. For
+example, [[id:0915af96-9c96-452c-aa7d-a2d2dc9b6fdd][we'd like to install Magit]].
+
+Fortunately, emacs has [[info:emacs#Packages][a built in package management system]]. It can
+download and install packages from a customisable list of /package
+archives/, which are defined in the =package-archives= variable. By
+default, that variable looks like this:
+#+begin_src elisp :tangle no
+(("gnu" . "https://elpa.gnu.org/packages/"))
+#+end_src
+
+This means we can download from the official gnu Emacs List Package
+Archive (elpa). However, the bar for getting a package in there is
+quite high, so we will often want to install from /Milkypostman’s
+Emacs Lisp Package Archive/, or =melpa=.
+
+There are two =melpa= archives, =melpa.org= and
+=stable.melpa.org=. The former was the original =melpa=, but suffered
+from packages that kept breaking in various ways. The stable archive
+was introduced for folks who want to live a little less on the
+bleeding edge. Generally speaking, packages in =melpa-stable= have
+semantic version numbers, while packages in =melpa= are organised by
+release-date rather than by version.
+
+If possible I'd like to stick to the stable archive.
+
+#+begin_src elisp
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+#+end_src
+
+Now that we have access to a wider range of packages, we can install
+things. However, doing so in code has a number of tedious edge-cases,
+which are best handled by the =use-package= library. Which we will
+first need to install.
+
+#+begin_src elisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+#+end_src
+
+Now that we have these packaging configs set up, it should be much
+simpler to do things like [[id:0915af96-9c96-452c-aa7d-a2d2dc9b6fdd][install Magit]].
 *** Writing this document in org-mode
 Meta, I know.
 
