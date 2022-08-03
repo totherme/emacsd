@@ -363,3 +363,31 @@ means:
 :PROPERTIES:
 :ID:       0915af96-9c96-452c-aa7d-a2d2dc9b6fdd
 :END:
+I'm keeping these configs in git, and it's nice to be able to manage
+git from within emacs. There is a clear winner when it comes to
+emacs-git workflows, and that is to [[https://magit.vc/manual/magit/][use magit]].
+
+Getting magit into emacs is easy if [[id:52f1be7b-2b15-4b4c-84fa-ece5e2437c7b][we've already set up
+=melpa-stable= and =use-package=]].
+
+#+begin_src elisp
+  (use-package magit
+	       :ensure t
+	       :commands (magit-status)
+	       :bind (("C-x g" . magit-status)))
+#+end_src
+
+I won't write here about using magit, since the magit info page is
+excellent.
+
+However, I do need to be able to sign my commits with GPG. For this to
+work with magit, I need to be able to enter GPG passphrases through
+emacs. This is possible with the pinentry package.
+
+#+begin_src emacs-lisp
+  (use-package pinentry
+    :ensure t)
+  (pinentry-start)
+#+end_src
+
+
