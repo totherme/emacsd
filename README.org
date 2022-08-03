@@ -227,6 +227,65 @@ aborted in the even that we never needed this line in the first place.
 
 Read more about org structure templates and snippets in [[info:org#Structure Templates][the manual here]].
 
-**** TODO More sustainable org-mode hyperlinking
+**** More sustainable org-mode hyperlinking
+:PROPERTIES:
+:ID:       1cc584ba-f164-4481-b4e0-fc6388e70358
+:END:
+In this document, I want to be able to hyperlink from one section to
+another. For example, at the top of this use-case section, I have a
+short list of upcoming subsections, each of which is hyperlinked.
+
+In future I may want to split this file up into several smaller files,
+and cross-link between them.
+
+Org provides a few different ways of linking to other bits of
+org-file. My favourite is [[info:org#Handling Links][to use =CUSTOM_ID= properties]]. The easiest
+way to do this is to [[help:org-id-link-to-org-use-id][set the =org-id-link-to-org-use-id= variable]] to
+non-nil, and then to [[help:org-store-link][bind the =org-store-link= function]] to a useful
+key:
+
+#+begin_src elisp
+(setq org-id-link-to-org-use-id t)
+(global-set-key (kbd "C-c l") 'org-store-link)
+#+end_src
+
+Now, any time my cursor is pointing at something which I'd like to
+hyperlink to later, I can hit =C-c l=, to save that link. Then I can
+navigate back to my document, highlight the text I want to link from,
+and hit =C-c C-l <RET>= to make the link.
+
+If the thing I'm linking to is a section in an org-document, the act
+of storing the link will cause a =CUSTOM_ID= property to be
+created. For example, this section currently begins like this:
+
+#+begin_src fundamental
+,**** More sustainable org-mode hyperlinking
+In this document, I want to be able to hyperlink from one section to
+another...
+#+end_src
+
+But if I hit =C-c l=, then an ID property gets created like so:
+
+#+begin_src fundamental
+,**** More sustainable org-mode hyperlinking
+:PROPERTIES:
+:ID:       1cc584ba-f164-4481-b4e0-fc6388e70358
+:END:
+In this document, I want to be able to hyperlink from one section to
+another...
+#+end_src
+
+Now I can create [[id:1cc584ba-f164-4481-b4e0-fc6388e70358][a link]] which looks like this:
+#+begin_src fundamental
+... create [[id:1cc584ba-f164-4481-b4e0-fc6388e70358][a link]] which looks like...
+#+end_src
+
+Notice that we're linking to the ID, which org will try to keep as
+close to globally unique as possible. We are *not* relying on any kind of
+tree path or headline naming scheme to make the hyperlink work. This
+means:
+- I can re-name this section, and the link will still work.
+- I can move this section to another part of the document, and the
+  link will still work.
 
 **** TODO Magit: an easy way to check things into git
