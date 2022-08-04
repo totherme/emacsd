@@ -316,6 +316,7 @@ non-nil, and then to [[help:org-store-link][bind the =org-store-link= function]]
 key:
 
 #+begin_src elisp
+(require 'org-id)
 (setq org-id-link-to-org-use-id t)
 (global-set-key (kbd "C-c l") 'org-store-link)
 #+end_src
