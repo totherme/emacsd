@@ -205,8 +205,8 @@ still sometimes use the command =M-$= (=ispell-word=) to check the
 spelling of a single word if I'm unsure.
 
 The emacs help system [[help:ispell-buffer][tells me]] that =ispell-buffer= was "[p]robably
-introduced at or before Emacs version 19.20", and links to [[file:/usr/share/emacs/27.2/etc/NEWS.19::To check the entire current buffer, use M-x ispell-buffer.][the
-relevant section of the emacs news file for version 19]]. It's worth
+introduced at or before Emacs version 19.20", and links to
+[[file:/usr/share/emacs/27.2/etc/NEWS.19::To check the entire current buffer, use M-x ispell-buffer.][the relevant section of the emacs news file for version 19]]. It's worth
 noting that before =ispell-buffer= was introduced, the =M-$= command
 already existed, and used the unix =spell= program. I guess =ispell=
 stands for =interactive spell=, and provides a better UX on the
