@@ -392,3 +392,108 @@ emacs. This is possible with the pinentry package.
 #+end_src
 
 
+*** Setting up [[https://xmonad.org][xmonad]]
+
+Xmonad is a tiling window manager, which I have some fondness
+for. After the [[https://en.wikipedia.org/wiki/Wmii][sadly now defunct wmii]], it was the first tiling WM I
+ever used.
+
+The [[https://xmonad.org][xmonad page]] recommends that we install it using our OS
+package-manager. But in slackware, this feels like it might not be the
+best option. There /is/ [[http://slackbuilds.org/][a slackbuild for it]], but the dependency-tree
+quickly starts to feel a bit excessive.
+
+I'd like to be able to code in haskell on this machine anyway, so I'm
+going to follow the instructions for [[https://xmonad.org/INSTALL.html][building from source in
+userspace]].
+
+This will likely involve something like the following:
+
+- Compilers etc: setting up GHC, cabal, stack, and so on.
+- Editor: making haskell comfortable in emacs.
+- Xmonad: installing and configuring the WM itself.
+
+**** Compilers etc
+:PROPERTIES:
+:ID:       4b9c729c-d628-4bfd-9c03-c1d1b1830228
+:END:
+It seems that the modern way to install haskell in userspace is with a
+[[https://www.haskell.org/ghcup/][tool called ghcup]]. This installs:
+- GHC :: The compiler
+- Cabal :: The original dependency management tool
+- Stack :: Another dependency management tool
+- HLS :: A language server which we can integrate with emacs, to build
+  our IDE.
+
+Installing ghcup, and thence all the above is as easy as running:
+#+begin_src bash :eval never :tangle no
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+#+end_src
+
+**** Editor: haskell in emacs
+Now that [[id:4b9c729c-d628-4bfd-9c03-c1d1b1830228][I have HLS installed]], I should hopefully be able to use it in
+conjunction with emacs. The [[https://haskell-language-server.readthedocs.io/en/latest/#][docs for the HLS are here]]. In particular,
+the [[https://haskell-language-server.readthedocs.io/en/latest/configuration.html#emacs][section on emacs]] says:
+#+begin_quote
+Emacs support is provided by a combination of the following packages:
+
+lsp-mode lsp-ui lsp-haskell
+
+You can install these manually if you are using plain Emacs; instructions for some specific flavours are
+included below.
+#+end_quote
+
+Of these three, =lsp-mode= and =lsp-ui= are available on
+=melpa-stable=, but =lsp-haskell= is not. It looks like [[https://melpa.org/#/lsp-haskell][lsp-haskell]] is
+available on =melpa=, but I'd like to avoid those less stable packages
+for now.
+
+***** TODO Come back to lsp-haskell later, and see if it's on melpa-stable yet.
+
+***** Installing a stable haskell mode
+According to [[https://wiki.haskell.org/Emacs][the haskell wiki]] "haskell-mode is stable and usable,
+whereas lsp-haskell is newer but under development and not ready for
+general use".
+
+So I guess we want =haskell-mode=, which [[https://github.com/haskell/haskell-mode#start-of-content][is on github here]], and should
+be quite simple to [[*Installing emacs packages][get with use-package]]:
+#+begin_src elisp
+  (use-package haskell-mode
+    :ensure t)
+#+end_src
+
+**** Xmonad: installing and configuring the WM
+The installation instructions [[https://xmonad.org/INSTALL.html][are here]].
+
+Following them is pretty straightforward. We create a
+=~/.config/xmonad= directory; clone =xmonad= and =xmonad-contrib=, and
+check out the latest tags; and create a simple default =xmonad.hs=.
+
+I'm going with /almost/ the bare default -- but I'm setting the main
+modifier key to one that doesn't clash with emacs, and the terminal
+to something nicer than a bare xterm:
+
+#+begin_src haskell :tangle no :eval never
+import XMonad
+
+main :: IO ()
+main = xmonad $ def
+       { modMask = mod4Mask             -- Rebind Mod to the Super key
+       , terminal = "urxvt -rv +sb -ls" -- Set terminal to a simple
+                                        -- dark unicode rxvt login
+                                        -- shell
+       }
+#+end_src
+
+I created the directory using [[info:emacs#Dired][Dired]]. I opened =~/.config= using =C-x
+C-f=, and used =+= to add a new directory, which I named =xmonad= at
+the prompt. This gave me a buffer representing my =xmonad= directory,
+where I could use =M-&= (=async-shell-command=) to run the =git clone=
+operations.
+
+Finally, I can use the same =M-&= command to run =stack init=, which
+creates a build script, and =stack install=, which installs =xmonad=
+in =~/.local/bin=.
+
+I can call this binary with an =exec xmonad= line in my =~/.xinitrc=.
+
