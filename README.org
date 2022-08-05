@@ -74,9 +74,10 @@ To get comfortable to start writing, I needed a few little things:
 - [[id:622185b0-8934-439a-9630-72826b55a95b][Turn on word-wrapping and spell checking]]
 - [[id:0179515c-2e43-4072-8708-87035583664d][Make org-mode source snippets work]]
 
-Once I'm writing, I need two more:
+Once I'm writing, I need three more:
 - [[id:1cc584ba-f164-4481-b4e0-fc6388e70358][More sustainable org-mode hyperlinking]]
 - [[id:0915af96-9c96-452c-aa7d-a2d2dc9b6fdd][Magit: an easy way to check things into git]]
+- [[id:e83d211f-8c44-47ca-a81e-d61f1bce629f][Sensible file backups]]
 
 **** Use a dark theme
 :PROPERTIES:
@@ -391,6 +392,38 @@ emacs. This is possible with the pinentry package.
   (pinentry-start)
 #+end_src
 
+**** Sensible file backups
+:PROPERTIES:
+:ID:       e83d211f-8c44-47ca-a81e-d61f1bce629f
+:END:
+By default, if we're editing a file called =somefile.file=, emacs
+will often create a backup file =somefile.file~= of what that file
+/used/ to look like before we started messing with it.
+
+This is a pretty good idea, and has saved me from a few ill-advised
+edits that would otherwise have broken stuff over the years. However,
+it does leave my filesystem looking a little cluttered, and risks me
+accidentally checking backups into git.
+
+We can customise this behaviour to keep all the backups in one place,
+out of the way of my git repos and so on. I'm going to put them in my
+=~/.saves= directory. I'm also going to tell emacs to keep more than
+one old version of a given file, and to limit things to 6 backups per
+file:
+
+#+begin_src elisp
+     (setq
+	backup-by-copying t
+	backup-directory-alist
+	 '(("." . "~/.saves"))
+	version-control t
+	delete-old-versions t
+	kept-new-versions 4
+	kept-old-versions 2)
+#+end_src
+
+For more on this backup mechanism, and how these variables affect it,
+see [[info:emacs#Backup][the backup files section of the emacs manual]].
 
 *** Setting up [[https://xmonad.org][xmonad]]
 
