@@ -360,7 +360,7 @@ means:
 - I can move this section to another part of the document, and the
   link will still work.
 
-**** TODO Magit: an easy way to check things into git
+**** Magit: an easy way to check things into git
 :PROPERTIES:
 :ID:       0915af96-9c96-452c-aa7d-a2d2dc9b6fdd
 :END:
