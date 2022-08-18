@@ -530,3 +530,224 @@ in =~/.local/bin=.
 
 I can call this binary with an =exec xmonad= line in my =~/.xinitrc=.
 
+*** Editing bash scripts
+Emacs comes with [[file:/usr/share/emacs/27.2/lisp/progmodes/sh-script.el.gz::(define-derived-mode sh-mode prog-mode "Shell-script"][sh-mode]] by default, and this is pretty good for bash
+and sh scripts.
+
+I like to add [[https://www.shellcheck.net/][shellcheck]] to my system too. Shellcheck is a tool (a
+linter) which checks shell scripts for common errors before you've run
+them. In a dynamically typed language like bash -- and especially one
+so esoteric as bash -- it can be a lifesaver.
+
+As [[https://www.shellcheck.net/][the shellcheck home page]] says, you can install shellcheck using
+cabal, apt, dnf, pkg or brew. I'll be using sbopkg to install [[http://slackbuilds.org/repository/15.0/development/ShellCheck-bin/][the
+slackbuild]].
+
+**** Using shellcheck with vanilla emacs
+
+Once I have shellcheck installed, I can use it with vanilla-emacs
+using the =M-x compile= command. For example, while editing my
+=.xinitrc= I might run =M-x compile= then =shellcheck -f gcc
+.xinitrc=. This gives me a new window that looks something like the
+following:
+
+#+begin_src compilation
+-*- mode: compilation; default-directory: "~/" -*-
+Compilation started at Fri Aug 12 09:09:21
+
+shellcheck -f gcc .xinitrc
+.xinitrc:21:9: note: Double quote to prevent globbing and word splitting. [SC2086]
+.xinitrc:22:17: note: Double quote to prevent globbing and word splitting. [SC2086]
+.xinitrc:25:9: note: Double quote to prevent globbing and word splitting. [SC2086]
+.xinitrc:26:13: note: Double quote to prevent globbing and word splitting. [SC2086]
+.xinitrc:33:6: warning: Quote this to prevent word splitting. [SC2046]
+
+Compilation exited abnormally with code 1 at Fri Aug 12 09:09:21
+#+end_src
+
+Notice that I told shellcheck to give me errors in the same format at
+gcc when I specified =-f gcc=. This is a format that emacs recognises,
+so my compilation window gets sensible syntax highlighting and
+hyperlinking. If I hit =<RETURN>= on any of the error messages, my
+cursor will jump straight to the point in my source file that
+generated the error.
+
+When I think I've fixed my errors, I can re-run shellcheck by hitting
+=g= in the compilation window.
+
+To read more about emacs' compilation mode, [[info:emacs#Compilation][see this info page]].
+
+This isn't a bad user-experience, but we can do better.
+
+**** Getting on-the-fly checking
+
+To make this integrate with emacs, we can use the [[http://www.flycheck.org/en/latest/][flycheck]] package:
+
+#+BEGIN_SRC emacs-lisp
+;  (use-package flycheck
+;    :ensure t
+;    :delight
+;    :commands flycheck-mode)
+#+END_SRC
+
+...or the built-in [[info:flymake#Top][flymake]]...
+
+***** Plan:
+
+****** TODO use [[info:ert#Introduction][ERT]] to write tests for the [[info:flymake#Backend functions][flymake backend function]]
+Maybe keep them in here, but tangle them to another file?
+
+Maybe show some incremental development in =:tangle no= blocks?
+
+#+begin_src elisp
+  (ert-deftest gds-shellcheck-no-errors ()
+    "Shellcheck finds no errors in a perfect script."
+    ;; Create a spy report-function
+    ;; Open a perfect script (test fixture)
+    ;; Call gds-flymake-shellcheck
+    ;; Wait for report function to say something about finishing?
+    ;; Check that no errors were reported.
+  )
+
+  (ert-deftest gds-shellcheck-some-errors ()
+    "Shellcheck finds the right errors in a buggy script."
+    ;; Create a spy report-function
+    ;; Open a buggy script (test fixture)
+    ;; Call gds-flymake-shellcheck
+    ;; Wait for report function to say something about finishing?
+    ;; Check that the right errors were reported.
+  )
+
+#+end_src
+
+
+****** TODO Write the flymake back end function
+#+begin_src elisp
+  (defun gds-flymake-shellcheck (report-fn &rest keylist)
+  
+  )
+
+  (add-hook 'flymake-diagnostic-functions 'gds-flymake-shellcheck)
+#+end_src
+
+**** TODO Tie the backend function in
+
+#+begin_src elisp
+(add-hook 'flymake-diagnostic-functions `gds-flymake-shellcheck)
+#+end_src
+
+*** TODO Keep track of bookmarks
+:PROPERTIES:
+:ID:       d5067eea-4bcc-4839-80a6-ba05d4214a42
+:END:
+Emacs' [[info:org#Top][org-mode]] gives us an excellent way of keeping track of
+bookmarks, using its [[info:org#Capture][capture function]]. 
+
+If we keep a bookmarks org file in [[https://www.dropbox.com/][dropbox]], we can add bookmarks to it
+using an org capture template:
+#+begin_src elisp
+  (setq org-capture-templates
+	'(
+	  ("b" "Bookmark" entry 
+	   (file "~/Dropbox/Documents/Orgzly/bookmarks.org")
+	   "* %:annotation \n%i"
+	   :immediate-finish t)))
+#+end_src
+
+...and we can capture bookmarks with =C-c c b=
+
+#+begin_src elisp
+  (global-set-key (kbd "C-c c") 'org-capture)
+#+end_src
+
+**** TODO rsync instead of dropbox?
+
+*** TODO Browsing the web
+
+#+begin_src elisp
+(setq browse-url-browser-function 'eww-browse-url)
+#+end_src
+
+*** TODO Email
+
+Trying the MH-E framework, and the MH suite from the gnu mailutils
+package.
+
+This means installing the following slackbuilds:
+- libgsasl
+- mailutils
+
+
+
+*** TODO Put the control key in a more comfortable place
+
+**** TODO using xmodmap for X
+
+#+begin_src xmodmap
+keycode 66 = Control_L
+clear Lock
+add Control = Control_L
+#+end_src
+
+**** TODO also in the console!
+
+Looks like this will be something to do with loadkeys. Try =man
+loadkeys= or =man 5 keymaps=.
+
+Also =/usr/share/kbd=. Possibly we have to edit
+=/usr/share/kbd/keymaps/i386/qwerty/uk.map.gz=
+
+By default, the bottom of this file looks like:
+
+#+begin_example
+keycode  28 = Return
+	alt	keycode  28 = Meta_Control_m
+keycode  29 = Control
+keycode  39 = semicolon        colon
+keycode  40 = apostrophe       at
+	control	keycode  40 = Control_g
+	shift	control	keycode  40 = nul
+keycode  41 = grave            notsign          bar              nul
+keycode  42 = Shift
+keycode  43 = numbersign       asciitilde
+	control	keycode  43 = Control_backslash
+keycode  51 = comma            less
+keycode  52 = period           greater
+keycode  53 = slash            question
+	control	keycode  53 = Delete
+keycode  54 = Shift
+keycode  56 = Alt
+keycode  57 = space
+	control	keycode  57 = nul
+keycode  58 = Caps_Lock
+keycode  86 = backslash        bar              bar              Control_backslash
+keycode  97 = Control
+#+end_example
+
+Let's change it to swap =Caps_Lock= out for =Control=, and see if that
+breaks everything.
+
+#+begin_example
+keycode  28 = Return
+	alt	keycode  28 = Meta_Control_m
+keycode  29 = Control
+keycode  39 = semicolon        colon
+keycode  40 = apostrophe       at
+	control	keycode  40 = Control_g
+	shift	control	keycode  40 = nul
+keycode  41 = grave            notsign          bar              nul
+keycode  42 = Shift
+keycode  43 = numbersign       asciitilde
+	control	keycode  43 = Control_backslash
+keycode  51 = comma            less
+keycode  52 = period           greater
+keycode  53 = slash            question
+	control	keycode  53 = Delete
+keycode  54 = Shift
+keycode  56 = Alt
+keycode  57 = space
+	control	keycode  57 = nul
+keycode  58 = Control
+keycode  86 = backslash        bar              bar              Control_backslash
+keycode  97 = Control
+#+end_example
