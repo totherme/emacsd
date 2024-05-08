@@ -489,7 +489,34 @@
                       '(warning . haskell-hlint))))
     #+END_SRC
 
+* Nix
+[[https://nixos.org/][Nix]] is a tool for managing installations and configurations.
+#+begin_src emacs-lisp
+    (use-package nix-mode
+      :ensure t
+      :mode "\\.nix\\'")
+#+end_src
+* LSP
+LSP stands for "[[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]", and was popularised by
+VSCode. From our perspective, it'll allow us to use all the
+language-specific magic that you get in IDEs like VSCode.
 
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :ensure t
+    :commands lsp
+    :diminish lsp-mode
+    :hook
+    (elixir-mode . lsp)
+    :init
+    (add-to-list 'exec-path "~/.nix-profile/bin/"))
+#+end_src
+* Elixir
+A modern ruby-like language on the erlang beam VM
+#+begin_src emacs-lisp
+  (use-package elixir-mode
+    :ensure t)
+#+end_src
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
