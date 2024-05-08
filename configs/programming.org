@@ -258,31 +258,10 @@
     #+BEGIN_SRC emacs-lisp
       (defun my-go-keybindings ()
 	(local-set-key (kbd "C-c m") 'gofmt)
-	(local-set-key (kbd "C-c C-e") 'flymake-popup-current-error-menu)
 	(local-set-key (kbd "M-.") 'godef-jump)
 	(local-set-key (kbd "C-<mouse-1>") 'my-golang-introspect)
 	(local-set-key (kbd "C-<down-mouse-1>") 'my-do-nothing))
       (add-hook 'go-mode-hook 'my-go-keybindings)
-    #+END_SRC
-
-*** On-the-fly typechecking and docs
-    :PROPERTIES:
-    :ID:       cdaec022-e705-4419-81ca-eadef848b262
-    :END:
-    The [[https://github.com/dougm/goflymake][go backend for flymake]] (to give us on-the-fly typechecking)
-    isn't available in MELPA, so we provide it as a git submodule. The
-    [[https://github.com/syohex/emacs-go-eldoc/tree/cbbd2ea1e94a36004432a9ac61414cb5a95a39bd][go backend]] for [[https://www.emacswiki.org/emacs/ElDoc][eldoc]] (which shows the type and argument list of
-    the function you're calling) is in MELPA, so we can get that the
-    usual way.
-    #+BEGIN_SRC emacs-lisp
-      (use-package go-flymake
-	:load-path "~/.emacs.d/goflymake"
-	:delight)
-      (add-hook 'go-mode-hook 'flymake-mode)
-      (use-package go-eldoc
-	:ensure t
-	:delight)
-      (add-hook 'go-mode-hook 'go-eldoc-setup)
     #+END_SRC
 
 *** Autocompletion
@@ -510,21 +489,6 @@
                       '(warning . haskell-hlint))))
     #+END_SRC
 
-** LaTeX
-   :PROPERTIES:
-   :ID:       36e67f1e-137c-4ca3-9fca-eda0569663f2
-   :END:
-   #+begin_src emacs-lisp
-     (use-package latex-extra
-       :ensure t
-       :config
-       (add-hook 'LaTeX-mode-hook #'latex-extra-mode))
-
-     (use-package latex-preview-pane
-       :ensure t
-       :config
-       (latex-preview-pane-enable))
-   #+end_src
 
 * Footnotes
 
