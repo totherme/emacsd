@@ -517,6 +517,11 @@ A modern ruby-like language on the erlang beam VM
   (use-package elixir-mode
     :ensure t)
 #+end_src
+* Terraform
+#+begin_src emacs-lisp
+  (use-package terraform-mode
+    :ensure t)
+#+end_src
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
