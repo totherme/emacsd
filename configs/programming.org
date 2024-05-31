@@ -268,28 +268,11 @@
     :PROPERTIES:
     :ID:       f0839e51-f95b-4cb4-829b-a5f2798f21ca
     :END:
-    Use the company-go backend to provide smart (type-driven) autocompletion for go.
-    #+BEGIN_SRC emacs-lisp
-      (use-package company-go
-	:ensure t
-	:delight)
-    #+END_SRC
-    In particular, note that this backend supports godocs. This means
-    that if you're looking at a bunch of possible completions for your
-    line, and want to learn more about the function you're about to
-    call, you can just highlight the candidate completion, and hit
-    ~<f1>~.
-    #+CAPTION: Hit ~<f1>~ for docs
-    [[./images/company-autocomplete-plus-docs.png]]
+    Use the gopls integration (LSP mode) in go-mode for autocompletion and so on.
 
-    Use the go-backend precisely (always and only) when we're editing golang files.
-
-    #+BEGIN_SRC emacs-lisp
-      (defun my-company-go-backend ()
-	(set (make-local-variable 'company-backends) '(company-go))
-	(company-mode))
-      (add-hook 'go-mode-hook 'my-company-go-backend)
-    #+END_SRC
+    #+begin_src emacs-lisp
+      (add-hook 'go-mode-hook 'lsp-deferred)
+    #+end_src
 
 *** Testing
     :PROPERTIES:
@@ -489,14 +472,14 @@
                       '(warning . haskell-hlint))))
     #+END_SRC
 
-* Nix
+** Nix
 [[https://nixos.org/][Nix]] is a tool for managing installations and configurations.
 #+begin_src emacs-lisp
     (use-package nix-mode
       :ensure t
       :mode "\\.nix\\'")
 #+end_src
-* LSP
+** LSP
 LSP stands for "[[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]", and was popularised by
 VSCode. From our perspective, it'll allow us to use all the
 language-specific magic that you get in IDEs like VSCode.
@@ -511,13 +494,13 @@ language-specific magic that you get in IDEs like VSCode.
     :init
     (add-to-list 'exec-path "~/.nix-profile/bin/"))
 #+end_src
-* Elixir
+** Elixir
 A modern ruby-like language on the erlang beam VM
 #+begin_src emacs-lisp
   (use-package elixir-mode
     :ensure t)
 #+end_src
-* Terraform
+** Terraform
 #+begin_src emacs-lisp
   (use-package terraform-mode
     :ensure t)
