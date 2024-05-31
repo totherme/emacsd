@@ -89,9 +89,9 @@
    #+BEGIN_SRC emacs-lisp
      (require 'ansi-color)
      (defun colorize-compilation-buffer ()
-       (toggle-read-only)
+       (read-only-mode nil)
        (ansi-color-apply-on-region compilation-filter-start (point))
-       (toggle-read-only))
+       (read-only-mode t))
      (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
    #+END_SRC
 ** Searching
