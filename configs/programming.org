@@ -505,6 +505,14 @@ A modern ruby-like language on the erlang beam VM
   (use-package terraform-mode
     :ensure t)
 #+end_src
+** Kubernetes
+#+begin_src emacs-lisp
+  (use-package k8s-mode
+    :ensure t)
+  (use-package kubernetes
+    :ensure t)
+  (fset 'k8s 'kubernetes-overview)
+#+end_src
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
