@@ -8,5 +8,5 @@
 
 (org-babel-load-file "~/.emacs.d/configs/programming.org")
 
-(org-babel-load-file "~/.emacs.d/configs/internetting.org")
+; (org-babel-load-file "~/.emacs.d/configs/internetting.org")
 (put 'upcase-region 'disabled nil)
