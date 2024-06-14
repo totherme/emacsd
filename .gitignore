@@ -1,24 +1,45 @@
+# Customizations and caches per machine
 emacs-custom.el
-/.mc-lists.el
-elpa
-auto-save-list
-/ido.last
 /emacs-custom.el~
+auto-save-list
+/session.*
+/.#session*
+eshell/
+/transient
+/url/
+/.cache
+
+# Elisp generated from org
 /configs/basics.el
 /configs/magit.el
 /configs/programming.el
-var
-/projectile-bookmarks.eld
 /configs/internetting.el
-/emojis/
-/org-clock-save.el
-/network-security.data
-/session.*
-request/
-/bookmarks
-/.#session*
-eshell/
+/README.el
+
+# Package cache
+elpa
+var
+
+# Native compilation
+/eln-cache
+
+# Some packages need their own caches
 .trello
-/transient
 /tramp
-/url/
+/*.sqlite
+/projectile-bookmarks.eld
+/ido.last
+/.mc-lists.el
+/emojis/
+
+# Emacs uses TLS now, and keeps track of who it trusts
+/network-security.data
+
+# Curl
+request/
+
+# Org state
+/bookmarks
+/.org-id-locations
+/org-clock-save.el
+/org-roam.db
