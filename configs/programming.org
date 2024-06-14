@@ -512,6 +512,9 @@ A modern ruby-like language on the erlang beam VM
   (use-package kubernetes
     :ensure t)
   (fset 'k8s 'kubernetes-overview)
+  ;; (use-package kele
+  ;;   :ensure t)
+  ;; (bind-key (kbd "s-k") kele-command-map kele-mode-map)
 #+end_src
 * Footnotes
 
