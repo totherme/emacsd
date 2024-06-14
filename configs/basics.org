@@ -126,32 +126,6 @@
 
 ** Navigation
 
-*** Browser-like back/forward buttons
-
-    We can use the emacs [[https://www.emacswiki.org/emacs/BackButton][back button]] for browser-like navigation. So
-    long as the toolbar is left on, we'll get back and forward buttons
-    in the toolbar. If you want to navigate backwards and forwards
-    with the keyboard, use the following:
-    - For backwards ~C-x C-<left>~ or ~C-x <left>~.
-    - For forwards ~C-x C-<right>~ or ~C-x <right>~.
-    #+BEGIN_SRC emacs-lisp
-      (use-package back-button
-        :ensure t
-	:delight
-        :commands back-button-mode)
-      (back-button-mode 1)
-      (define-key back-button-mode-map (kbd "C-x <left>") 'back-button-global-backward)
-      (define-key back-button-mode-map (kbd "C-x <right>") 'back-button-global-forward)
-    #+END_SRC
-
-    Note that by default, the =back button= package uses ~C-x <left>~
-    and ~C-x <right>~ for moving backward and forward in the current
-    buffer only. To go backwards and forwards across buffers, you need
-    to use ~C-x C-<left>~ and ~C-x C-<right>~. Unfortunately
-    ~C-<left>~ and ~C-<right>~ don't work at the termina. Since we
-    think that inter-buffer (global) movement is more valuable than
-    the local movement, we map both sets of shortcuts to that.
-
 *** Window navigation
 Emacs [[info:emacs#Window Convenience][comes with a thing called windmove]], which makes it easier to
 move between various windows (or perhaps "panels" or "splits" to use
