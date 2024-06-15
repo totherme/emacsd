@@ -67,7 +67,6 @@ simpler to do things like [[id:0915af96-9c96-452c-aa7d-a2d2dc9b6fdd][install Mag
 Meta, I know.
 
 To get comfortable to start writing, I needed a few little things:
-- [[id:96936ca1-0ed9-44e5-8006-c74ff1673eb3][Use a dark theme]]
 - [[id:3c07a0c6-e429-4213-9902-6ce6b6c6b929][Use a larger font]]
 - [[id:33615063-5da3-4819-ae66-ab88c3106138][GUI elements: get rid of ones I don't like, and add ones I like]]
 - [[id:25248000-52aa-498a-81af-6e1f5275b64b][Make org-mode consistent across emacs versions]]
@@ -78,21 +77,6 @@ Once I'm writing, I need three more:
 - [[id:1cc584ba-f164-4481-b4e0-fc6388e70358][More sustainable org-mode hyperlinking]]
 - [[id:0915af96-9c96-452c-aa7d-a2d2dc9b6fdd][Magit: an easy way to check things into git]]
 - [[id:e83d211f-8c44-47ca-a81e-d61f1bce629f][Sensible file backups]]
-
-**** Use a dark theme
-:PROPERTIES:
-:ID:       96936ca1-0ed9-44e5-8006-c74ff1673eb3
-:END:
-Emacs in the GUI uses a light theme by default. I prefer a dark
-one. The =wheatgrass= theme comes with emacs, and is dark.
-
-#+begin_src elisp
-(load-theme 'wheatgrass t)
-#+end_src
-
-The optional =t= means we don't ask the user interactively to check
-that it's ok to run the elisp in the theme code. I'm trusting it
-because it ships with emacs.
 
 **** Use a larger font
 :PROPERTIES:
