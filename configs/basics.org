@@ -25,6 +25,19 @@
       (require 'use-package))
   #+END_SRC
   
+* Play nice with other editors
+
+The [[https://editorconfig.org/][editor config]] standard allows us to standardise things like
+indent-levels, tabs, spaces, etc across different editors. We should
+respect it.
+
+#+begin_src emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+#+end_src
+
 * UI Tweaks And Keybindings
 
 ** Basic Sanity
