@@ -516,6 +516,12 @@ A modern ruby-like language on the erlang beam VM
   ;;   :ensure t)
   ;; (bind-key (kbd "s-k") kele-command-map kele-mode-map)
 #+end_src
+** Ag, the Silver Searcher
+
+#+begin_src emacs-lisp
+  (use-package ag
+    :ensure t)
+#+end_src
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
