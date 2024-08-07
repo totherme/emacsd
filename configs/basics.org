@@ -76,7 +76,7 @@ respect it.
    p g~ by default. Let's also bind it to command-p.
 
    #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "s-p") 'projectile--find-file-dwim)
+     (global-set-key (kbd "s-p") 'projectile-find-file-dwim)
    #+END_SRC
 
    You can ask emacs for all the other project-related shortcuts by
