@@ -504,6 +504,8 @@ A modern ruby-like language on the erlang beam VM
 #+begin_src emacs-lisp
   (use-package terraform-mode
     :ensure t)
+
+  (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 #+end_src
 ** Kubernetes
 #+begin_src emacs-lisp
