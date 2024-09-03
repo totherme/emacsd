@@ -533,6 +533,7 @@ I want to:
 #+begin_src emacs-lisp
   (defun gds-setup-terraform-editing ()
     "Set up the terraform bits we want when editing TF stuff"
+    (interactive)
     (lsp)
     (terraform-format-on-save-mode)
     (flycheck-add-next-checker 'terraform-tflint 'lsp)
