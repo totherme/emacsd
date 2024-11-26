@@ -578,7 +578,7 @@ coding.
 
 [[help:Package][The docs for org-ai]] say I need at least this much config:
 
-#+begin_src emacs-lisp-blah
+#+begin_src emacs-lisp
 (use-package org-ai
   :ensure t
   :commands (org-ai-mode org-ai-global-mode)
@@ -592,9 +592,40 @@ coding.
   machine api.openai.com login org-ai password <your-api-key>
 #+end_src
 
+Now it ought to be possible to use AI blocks in org:
+
+#+begin_ai
+Tell me about the relationship between emacs and bash users?
+
+[AI]: Emacs and Bash users often have a complementary relationship, as both tools are commonly used in Unix-like environments, and they cater to distinct but overlapping use cases.
+
+1. **Text Editing vs. Command Line**: 
+   - Emacs is a highly extensible text editor, favored for its powerful editing capabilities, support for various programming languages, and extensible environment through Emacs Lisp. Users appreciate its features like syntax highlighting, code folding, and comprehensive project management.
+   - Bash, on the other hand, is a command line shell and scripting language used for command execution and app management. Bash users typically focus on automating tasks, running commands, and managing systems efficiently.
+
+2. **Integration**: 
+   - Many Emacs users leverage shell features within Emacs itself. Emacs has a built-in terminal emulator (`eshell`) and support for running shell commands directly, allowing users to stay within the Emacs ecosystem while still executing Bash commands.
+   - Users can run scripts or shell command prompts in Emacs buffers, which can enhance productivity by reducing context switching between applications.
+
+3. **Customization and Scripting**: 
+   - Emacs can be configured extensively using Emacs Lisp, which allows users to create scripts and extensions. Bash users, similarly, often write shell scripts to automate tasks. The two communities value scripting and customization, albeit in different contexts.
+
+4. **Shared User Base**: 
+   - There is significant overlap between Emacs and Bash users, particularly among developers, system administrators, and power users of Unix/Linux systems. Users familiar with Bash often utilize Emacs for coding or writing, while those who prefer Emacs may also use Bash for managing their systems or automating tasks.
+
+5. **Community and Culture**: 
+   - Both have strong communities that appreciate open-source tools and philosophies. Users often share configurations, tips, and packages that enhance the capabilities of both environments.
+
+In essence, while Emacs and Bash serve different primary functions—one for text editing and the other for command line interaction—they often work well together and are embraced by users who value efficiency and control in their workflows.
+
+[ME]: 
+#+end_ai
+
 *** Copilot-emacs
 
 See [[https://github.com/copilot-emacs/copilot.el][this github page]].
+
+First we need "straight", because for now (until emacs 30) that's the best way to install this thing.
 
 #+begin_src emacs-lisp
 (defvar bootstrap-version)
@@ -614,14 +645,19 @@ See [[https://github.com/copilot-emacs/copilot.el][this github page]].
   (load bootstrap-file nil 'nomessage))
 #+end_src
 
-#+begin_src emacs-lisp-blah
+Now we can get copilot mode:
+
+#+begin_src emacs-lisp
   (use-package copilot
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
     :ensure t)
 
   (add-hook 'prog-mode-hook 'copilot-mode)
 
+  (global-set-key (kbd "C-<tab>") 'copilot-accept-completion)
 #+end_src
+
+This also needed a =M-x copilot-install-server= and a =M-x copilot-login=.
 
 * Footnotes
 
