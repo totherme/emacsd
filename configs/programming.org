@@ -559,6 +559,70 @@ I want to:
   (use-package ag
     :ensure t)
 #+end_src
+
+** Typescript
+#+begin_src emacs-lisp
+  (use-package tide
+    :ensure t)
+  (use-package typescript-mode
+    :ensure t)
+#+end_src
+
+** AI Helpers
+
+*** Org-AI
+See [[https://github.com/rksm/org-ai][this github page]]. A general purpose AI assistant that uses
+org-mode and org-like hooks to try to be helpful when asked.  Does not
+appear to be a co-pilot-like autocompleter for moment-to-moment
+coding.
+
+[[help:Package][The docs for org-ai]] say I need at least this much config:
+
+#+begin_src emacs-lisp-blah
+(use-package org-ai
+  :ensure t
+  :commands (org-ai-mode org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode)
+  (org-ai-global-mode))
+#+end_src
+
+...and also an OpenAI API key in my =~/.authinfo.gpg= file of the form:
+#+begin_src text
+  machine api.openai.com login org-ai password <your-api-key>
+#+end_src
+
+*** Copilot-emacs
+
+See [[https://github.com/copilot-emacs/copilot.el][this github page]].
+
+#+begin_src emacs-lisp
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
+
+#+begin_src emacs-lisp-blah
+  (use-package copilot
+    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+    :ensure t)
+
+  (add-hook 'prog-mode-hook 'copilot-mode)
+
+#+end_src
+
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
