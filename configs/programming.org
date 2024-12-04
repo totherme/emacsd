@@ -653,6 +653,7 @@ Now we can get copilot mode:
     :ensure t)
 
   (add-hook 'prog-mode-hook 'copilot-mode)
+  (add-hook 'text-mode-hook 'copilot-mode)
 
   (global-set-key (kbd "C-<tab>") 'copilot-accept-completion)
 #+end_src
