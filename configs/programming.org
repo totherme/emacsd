@@ -579,12 +579,13 @@ coding.
 [[help:Package][The docs for org-ai]] say I need at least this much config:
 
 #+begin_src emacs-lisp
-(use-package org-ai
-  :ensure t
-  :commands (org-ai-mode org-ai-global-mode)
-  :init
-  (add-hook 'org-mode-hook #'org-ai-mode)
-  (org-ai-global-mode))
+  (use-package org-ai
+    :ensure t
+    :commands (org-ai-mode org-ai-global-mode)
+    :init
+    (add-hook 'org-mode-hook #'org-ai-mode)
+    (setq org-ai-default-chat-model "gpt-4o")
+    (org-ai-global-mode))
 #+end_src
 
 ...and also an OpenAI API key in my =~/.authinfo.gpg= file of the form:
