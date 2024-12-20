@@ -661,6 +661,17 @@ Now we can get copilot mode:
 
 This also needed a =M-x copilot-install-server= and a =M-x copilot-login=.
 
+*** Aider
+
+We install [[https://aider.chat/][aider]] with nix, then connect to it with [[https://github.com/tninja/aider.el][this emacs package]].
+
+#+begin_src emacs-lisp
+  (use-package aider
+    :straight (:host github :repo "tninja/aider.el" :files ("aider.el"))
+    :config
+    (setq aider-args '("--model" "gpt-4o"))
+    (global-set-key (kbd "C-c a") 'aider-transient-menu))
+#+end_src
 * Footnotes
 
 [fn:1] For example, if your stack project has different targets with
