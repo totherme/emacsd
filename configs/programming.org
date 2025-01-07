@@ -670,10 +670,16 @@ Now we can get copilot mode:
 #+begin_src emacs-lisp
   (use-package copilot
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-    :ensure t)
+    :ensure t
+    :config
+    (add-to-list 'copilot-indentation-alist '(prog-mode 4))
+    (add-to-list 'copilot-indentation-alist '(org-mode 4))
+    (add-to-list 'copilot-indentation-alist '(text-mode 4))
+    (add-to-list 'copilot-indentation-alist '(sh-mode 4))
+    (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
 
-  (add-hook 'prog-mode-hook 'copilot-mode)
-  (add-hook 'text-mode-hook 'copilot-mode)
+    (add-hook 'prog-mode-hook 'copilot-mode)
+    (add-hook 'text-mode-hook 'copilot-mode))
 
   (global-set-key (kbd "C-<tab>") 'copilot-accept-completion)
 #+end_src
