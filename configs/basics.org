@@ -223,6 +223,13 @@ the date by one day. The suggested fix is as follows:
 	version-control t)
    #+END_SRC
 
+   For files I'm editing on TRAMP, there might be privacy concerns, so
+   I don't want to keep backups on my local machine at all.
+   #+begin_src emacs-lisp
+     (add-to-list 'backup-directory-alist
+             (cons tramp-file-name-regexp nil))
+   #+end_src
+
 ** Don't close files when I type cmd-k
 
    The cmd-k shortcut is used for navigation in slack on mac. In emacs
