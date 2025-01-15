@@ -66,8 +66,10 @@ respect it.
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
        :ensure t
-       :delight)
-     (projectile-mode)
+       :delight
+       :config
+       (projectile-mode)
+       (global-set-key (kbd "C-c p") 'projectile-command-map))
    #+END_SRC
 
    Now that we have projectile mode, we can bind a key for
