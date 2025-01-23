@@ -472,13 +472,6 @@
                       '(warning . haskell-hlint))))
     #+END_SRC
 
-** Nix
-[[https://nixos.org/][Nix]] is a tool for managing installations and configurations.
-#+begin_src emacs-lisp
-    (use-package nix-mode
-      :ensure t
-      :mode "\\.nix\\'")
-#+end_src
 ** LSP
 LSP stands for "[[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]", and was popularised by
 VSCode. From our perspective, it'll allow us to use all the
@@ -494,6 +487,44 @@ language-specific magic that you get in IDEs like VSCode.
     :init
     (add-to-list 'exec-path "~/.nix-profile/bin/"))
 #+end_src
+** Nix
+[[https://nixos.org/][Nix]] is a tool for managing installations and configurations.
+
+Configs shamelessly stolen [[https://github.com/vimjoyer/nix-editor-setup-video][from here]].
+
+Since I'm not using tree-sitter, this would be The Way:
+#+begin_src emacs-lisp
+;; For Without Tree Sitter
+(use-package nix-mode
+  :ensure t
+  :hook
+  (nix-mode . lsp-deferred)) ;; So that envrc mode will work
+
+(use-package nix-mode
+  :after lsp-mode
+  :custom
+  (lsp-disabled-clients '((nix-mode . nix-nil))) ;; Disable nil so that nixd will be used as lsp-server
+  :config
+  (setq lsp-nix-nixd-server-path "nixd"))
+#+end_src
+
+But if I were, it would look like this:
+#+begin_example
+;; For Tree Sitter
+(use-package nix-ts-mode
+  :ensure t
+  :mode "\\.nix\\'"
+  :hook
+  (nix-ts-mode . lsp-deferred)) ;; So that envrc mode will work
+
+(use-package nix-ts-mode
+  :after lsp-mode
+  :custom
+  (lsp-disabled-clients '((nix-ts-mode . nix-nil))) ;; Disable nil so that nixd will be used as lsp-server
+  :config
+  (setq lsp-nix-nixd-server-path "nixd"))
+#+end_example
+
 ** Elixir
 A modern ruby-like language on the erlang beam VM
 #+begin_src emacs-lisp
