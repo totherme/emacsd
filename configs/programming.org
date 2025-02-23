@@ -658,17 +658,19 @@ In essence, while Emacs and Bash serve different primary functions—one for tex
 [[https://github.com/natrys/whisper.el][This]] gets me voice activation for some of my other packages. Particularly org-ai.
 
 #+begin_src emacs-lisp
-(use-package whisper
-  :load-path "~/workspace/whisper.el/"
-  :bind ("<f12>" . whisper-run))
+  (if (file-exists-p "~/workspace/whisper.el")
+      (progn
+        (use-package whisper
+          :load-path "~/workspace/whisper.el/"
+          :bind ("<f12>" . whisper-run))
 
-(use-package greader :ensure)
-(require 'whisper)
-(require 'org-ai-talk)
+        (use-package greader :ensure)
+        (require 'whisper)
+        (require 'org-ai-talk)
 
-;; macOS speech settings, optional
-(setq org-ai-talk-say-words-per-minute 210)
-(setq org-ai-talk-say-voice "Karen")
+        ;; macOS speech settings, optional
+        (setq org-ai-talk-say-words-per-minute 210)
+        (setq org-ai-talk-say-voice "Karen")))
 #+end_src
 
 
