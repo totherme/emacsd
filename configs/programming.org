@@ -705,7 +705,7 @@ We install [[https://aider.chat/][aider]] with nix, then connect to it with [[ht
   (use-package aider
     :vc (:url "https://github.com/tninja/aider.el")
     :config
-    (setq aider-args '("--model" "claude-3-5-sonnet-20241022"))
+    (setq aider-args '("--model" "claude-3-7-sonnet"))
     (global-set-key (kbd "C-c a") 'aider-transient-menu))
 #+end_src
 * Footnotes
