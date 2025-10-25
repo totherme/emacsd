@@ -44,3 +44,9 @@
   (ansi-color-apply-on-region compilation-filter-start (point))
   (read-only-mode t))
 (add-hook 'compilation-filter-hook 'colourize-compilation-buffer)
+
+;; Experiment with outline mode for markdown
+(defun markdown-outline-mode ()
+  (interactive)
+  (outline-mode)
+  (setq-local outline-regexp "^#+"))
