@@ -45,15 +45,22 @@
   (read-only-mode t))
 (add-hook 'compilation-filter-hook 'colourize-compilation-buffer)
 
-;; Experiment with outline mode for markdown
-(defun markdown-outline-mode ()
-  (interactive)
-  (outline-mode)
+(define-derived-mode markdown-mode outline-mode "Markdown Mode"
+  "A tiny tiny markdown mode.
+
+Basically just use outline mode, but recognise markdown headings. This
+won't get us bold, italics, code, quotes, etc. We'll just have to use
+our imaginations. Like we did on usenet."
   (setq-local outline-regexp "^#+"))
+
 ;; ...and use it for editing markdown files
 (add-to-list 'auto-mode-alist
-	     '("\\.md\\'" . markdown-outline-mode))
+	     '("\\.md\\'" . markdown-mode))
 
 ;; Use perl-mode for editing terraform files
 (add-to-list 'auto-mode-alist
 	     '("\\.tf\\'" . perl-mode))
+
+;; Also for nix files
+(add-to-list 'auto-mode-alist
+	     '("\\.nix\\'" . perl-mode))
