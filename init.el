@@ -50,3 +50,10 @@
   (interactive)
   (outline-mode)
   (setq-local outline-regexp "^#+"))
+;; ...and use it for editing markdown files
+(add-to-list 'auto-mode-alist
+	     '("\\.md\\'" . markdown-outline-mode))
+
+;; Use perl-mode for editing terraform files
+(add-to-list 'auto-mode-alist
+	     '("\\.tf\\'" . perl-mode))
