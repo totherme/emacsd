@@ -45,7 +45,7 @@
   (read-only-mode t))
 (add-hook 'compilation-filter-hook 'colourize-compilation-buffer)
 
-(define-derived-mode markdown-mode outline-mode "Markdown Mode"
+(define-derived-mode markdown-mode outline-mode "MD"
   "A tiny tiny markdown mode.
 
 Basically just use outline mode, but recognise markdown headings. This
