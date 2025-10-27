@@ -62,10 +62,21 @@ our imaginations. Like we did on usenet."
 (add-to-list 'auto-mode-alist
 	     '("\\.md\\'" . markdown-mode))
 
-;; Use perl-mode for editing terraform files
-(add-to-list 'auto-mode-alist
-	     '("\\.tf\\'" . perl-mode))
+(define-derived-mode hashcomment-mode prog-mode "HM"
+  "A tiny tiny programming mode with hash comments.
 
-;; Also for nix files
+Basically just programming mode, with every line that starts '#' as a
+comment."
+  (setq-local comment-start "#"
+	      comment-start-skip "#+ *"
+	      font-lock-defaults '('(("#.*\n" . font-lock-comment-face)
+				     ("\"[^\"]*\"" . font-lock-string-face))
+				   t)))
+
+;; ...and use it for editing terraform files
 (add-to-list 'auto-mode-alist
-	     '("\\.nix\\'" . perl-mode))
+	     '("\\.tf\\'" . hashcomment-mode))
+
+;; ...and for nix files
+(add-to-list 'auto-mode-alist
+	     '("\\.nix\\'" . hashcomment-mode))
