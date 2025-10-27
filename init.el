@@ -1,6 +1,6 @@
 ;; Save any interactively-made changes to a file that's not
 ;; version-controlled.
-(setq custom-file "~/.emacs.d/emacs-custom.el")
+(setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
 ;; Clean up the GUI

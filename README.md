@@ -6,5 +6,6 @@ Here's one set of opinions.
 
 ```
 mkdir -p ~/.emacs.d
+touch ~/.emacs.d/custom.el
 ln -s "$PWD/init.el" ~/.emacs.d/init.el
 ```
