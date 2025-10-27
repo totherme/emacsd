@@ -14,6 +14,7 @@
 ;; Make dired usually do the right thing
 (setq
  dired-dwim-target t
+ dired-listing-switches "alh"
  wdired-allow-to-change-permissions t)
 
 ;; Make windows easier to switch between, at the expense of
