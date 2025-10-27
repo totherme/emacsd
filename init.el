@@ -17,6 +17,10 @@
  dired-listing-switches "alh"
  wdired-allow-to-change-permissions t)
 
+;; Keep files up-to-date with what's happening on disk
+(global-auto-revert-mode)
+(setq auto-revert-check-vc-info t)
+
 ;; Make windows easier to switch between, at the expense of
 ;; shift-highlighting text
 (windmove-default-keybindings)
