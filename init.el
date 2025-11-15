@@ -14,7 +14,7 @@
 ;; Make dired usually do the right thing
 (setq
  dired-dwim-target t
- dired-listing-switches "alh"
+ dired-listing-switches "-alh"
  wdired-allow-to-change-permissions t)
 
 ;; Keep files up-to-date with what's happening on disk
