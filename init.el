@@ -81,38 +81,58 @@ comment."
 (add-to-list 'auto-mode-alist
 	     '("\\.nix\\'" . hashcomment-mode))
 
-(setq gds-builtin-light-color-themes
-      [ adwaita
-	dichromacy
-	leuven
-	modus-operandi
-	modus-operandi-deuteranopia
-	modus-operandi-tinted
-	modus-operandi-tritanopia
-	modus-vivendi
-	tango
-	tsdh-light
-	whiteboard ])
-(setq gds-next-light-theme-index 0)
+(defvar gds-builtin-light-color-themes
+  [ adwaita
+    dichromacy
+    leuven
+    modus-operandi
+    modus-operandi-deuteranopia
+    modus-operandi-tinted
+    modus-operandi-tritanopia
+    modus-vivendi
+    tango
+    tsdh-light
+    whiteboard ]
+  "A manually-curated array of light-mode color themes. You can cycle
+through them with `gds-try-next-light-theme'.
 
-(setq gds-builtin-dark-color-themes
-      [ deeper-blue
-	leuven-dark
-	manoj-dark
-	misterioso
-	modus-vivendi-deuteranopia
-	modus-vivendi-tinted
-	modus-vivendi-tritanopia
-	tango-dark
-	tsdh-dark
-	wheatgrass
-	wombat])
-(setq gds-next-dark-theme-index 0)
+See also `gds-next-light-theme-index' and `gds-try-next-dark-theme'.")
+
+(defvar gds-next-light-theme-index 0
+  "The index of the next light-mode color theme to try if you call
+`gds-try-next-light-theme'.
+
+See also `gds-builtin-light-color-themes' and `gds-try-next-dark-theme'.")
+
+(defvar gds-builtin-dark-color-themes
+  [ deeper-blue
+    leuven-dark
+    manoj-dark
+    misterioso
+    modus-vivendi-deuteranopia
+    modus-vivendi-tinted
+    modus-vivendi-tritanopia
+    tango-dark
+    tsdh-dark
+    wheatgrass
+    wombat]
+  "A manually-curated array of dark-mode color themes. You can cycle
+through them with `gds-try-next-dark-theme'.
+
+See also `gds-next-dark-theme-index' and `gds-try-next-light-theme'.")
+
+(defvar gds-next-dark-theme-index 0
+    "The index of the next light-mode color theme to try if you call
+`gds-try-next-dark-theme'.
+
+See also `gds-builtin-dark-color-themes' and `gds-try-next-light-theme'.")
 
 (defun gds-try-next-dark-theme ()
   "Try the next available dark theme.
 
-If we're currently using one or more themes, disable them first."
+If we're currently using one or more themes, disable them first.
+
+See also `gds-try-next-light-theme' and `gds-check-for-new-themes'."
   (interactive)
   (seq-do 'disable-theme custom-enabled-themes)
   (load-theme (aref gds-builtin-dark-color-themes gds-next-dark-theme-index))
@@ -123,7 +143,9 @@ If we're currently using one or more themes, disable them first."
 (defun gds-try-next-light-theme ()
   "Try the next available light theme.
 
-If we're currently using one or more themes, disable them first."
+If we're currently using one or more themes, disable them first.
+
+See also `gds-try-next-dark-theme' and `gds-check-for-new-themes'."
   (interactive)
   (seq-do 'disable-theme custom-enabled-themes)
   (load-theme (aref gds-builtin-light-color-themes gds-next-light-theme-index))
@@ -142,8 +164,8 @@ array. We return the index of the next element of the array."
   "Check for uncategorised themes.
 
 Print and return a list of themes that are available to use with
-'load-theme', but which are not yet categorised in either of
-'gds-builtin-light-color-themes' or 'gds-builtin-dark-color-themes'."
+`load-theme', but which are not yet categorised in either of
+`gds-builtin-light-color-themes' or `gds-builtin-dark-color-themes'."
   (interactive)
   (let ((new-themes (seq-filter 'gds-is-uncategorised-theme-p
 			    (custom-available-themes))))
@@ -159,9 +181,10 @@ Return t if we don't recognise THEME.
 
 Return nil if THEME is in our list of light or dark themes. Those are our
 main categories that we can rotate through with
-'gds-try-next-light-theme' and 'gds-try-next-dark-theme'
+`gds-try-next-light-theme' and `gds-try-next-dark-theme'
 
-Return nil if THEME is 'light-blue'. Because that one's apparently obsolete since Emacs 29.1, according to the warnings it prints."
+Return nil if THEME is `light-blue'. Because that one's apparently
+obsolete since Emacs 29.1, according to the warnings it prints."
   (not (or (eq theme 'light-blue)
 	   (seq-contains-p gds-builtin-light-color-themes theme)
 	   (seq-contains-p gds-builtin-dark-color-themes theme))))
