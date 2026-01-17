@@ -80,3 +80,89 @@ comment."
 ;; ...and for nix files
 (add-to-list 'auto-mode-alist
 	     '("\\.nix\\'" . hashcomment-mode))
+
+(setq gds-builtin-light-color-themes
+      [ adwaita
+	dichromacy
+	leuven
+	modus-operandi
+	modus-operandi-deuteranopia
+	modus-operandi-tinted
+	modus-operandi-tritanopia
+	modus-vivendi
+	tango
+	tsdh-light
+	whiteboard ])
+(setq gds-next-light-theme-index 0)
+
+(setq gds-builtin-dark-color-themes
+      [ deeper-blue
+	leuven-dark
+	manoj-dark
+	misterioso
+	modus-vivendi-deuteranopia
+	modus-vivendi-tinted
+	modus-vivendi-tritanopia
+	tango-dark
+	tsdh-dark
+	wheatgrass
+	wombat])
+(setq gds-next-dark-theme-index 0)
+
+(defun gds-try-next-dark-theme ()
+  "Try the next available dark theme.
+
+If we're currently using one or more themes, disable them first."
+  (interactive)
+  (seq-do 'disable-theme custom-enabled-themes)
+  (load-theme (aref gds-builtin-dark-color-themes gds-next-dark-theme-index))
+  (setq gds-next-dark-theme-index
+	(gds-get-rotated-index-of gds-next-dark-theme-index
+				  gds-builtin-dark-color-themes)))
+
+(defun gds-try-next-light-theme ()
+  "Try the next available light theme.
+
+If we're currently using one or more themes, disable them first."
+  (interactive)
+  (seq-do 'disable-theme custom-enabled-themes)
+  (load-theme (aref gds-builtin-light-color-themes gds-next-light-theme-index))
+  (setq gds-next-light-theme-index
+	(gds-get-rotated-index-of gds-next-light-theme-index
+				  gds-builtin-light-color-themes)))
+
+(defun gds-get-rotated-index-of (idx arr)
+  "Rotate the index IDX into array ARR.
+
+ARR must be an array. IDX must be an int that indexes into that
+array. We return the index of the next element of the array."
+  (% (+ 1 idx) (length arr)))
+
+(defun gds-check-for-new-themes ()
+  "Check for uncategorised themes.
+
+Print and return a list of themes that are available to use with
+'load-theme', but which are not yet categorised in either of
+'gds-builtin-light-color-themes' or 'gds-builtin-dark-color-themes'."
+  (interactive)
+  (let ((new-themes (seq-filter 'gds-is-uncategorised-theme-p
+			    (custom-available-themes))))
+    (if new-themes
+	(message "Detected new themes: %S" new-themes)
+      (message "There are no new themes."))
+    new-themes))
+
+(defun gds-is-uncategorised-theme-p (theme)
+  "Check if we've yet to categorise THEME.
+
+Return t if we don't recognise THEME.
+
+Return nil if THEME is in our list of light or dark themes. Those are our
+main categories that we can rotate through with
+'gds-try-next-light-theme' and 'gds-try-next-dark-theme'
+
+Return nil if THEME is 'light-blue'. Because that one's apparently obsolete since Emacs 29.1, according to the warnings it prints."
+  (not (or (eq theme 'light-blue)
+	   (seq-contains-p gds-builtin-light-color-themes theme)
+	   (seq-contains-p gds-builtin-dark-color-themes theme))))
+
