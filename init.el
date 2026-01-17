@@ -127,19 +127,6 @@ See also `gds-next-dark-theme-index' and `gds-try-next-light-theme'.")
 
 See also `gds-builtin-dark-color-themes' and `gds-try-next-light-theme'.")
 
-(defun gds-try-next-dark-theme ()
-  "Try the next available dark theme.
-
-If we're currently using one or more themes, disable them first.
-
-See also `gds-try-next-light-theme' and `gds-check-for-new-themes'."
-  (interactive)
-  (seq-do 'disable-theme custom-enabled-themes)
-  (load-theme (aref gds-builtin-dark-color-themes gds-next-dark-theme-index))
-  (setq gds-next-dark-theme-index
-	(gds-get-rotated-index-of gds-next-dark-theme-index
-				  gds-builtin-dark-color-themes)))
-
 (defun gds-try-next-light-theme ()
   "Try the next available light theme.
 
@@ -152,6 +139,19 @@ See also `gds-try-next-dark-theme' and `gds-check-for-new-themes'."
   (setq gds-next-light-theme-index
 	(gds-get-rotated-index-of gds-next-light-theme-index
 				  gds-builtin-light-color-themes)))
+
+(defun gds-try-next-dark-theme ()
+  "Try the next available dark theme.
+
+If we're currently using one or more themes, disable them first.
+
+See also `gds-try-next-light-theme' and `gds-check-for-new-themes'."
+  (interactive)
+  (seq-do 'disable-theme custom-enabled-themes)
+  (load-theme (aref gds-builtin-dark-color-themes gds-next-dark-theme-index))
+  (setq gds-next-dark-theme-index
+	(gds-get-rotated-index-of gds-next-dark-theme-index
+				  gds-builtin-dark-color-themes)))
 
 (defun gds-get-rotated-index-of (idx arr)
   "Rotate the index IDX into array ARR.
@@ -188,4 +188,3 @@ obsolete since Emacs 29.1, according to the warnings it prints."
   (not (or (eq theme 'light-blue)
 	   (seq-contains-p gds-builtin-light-color-themes theme)
 	   (seq-contains-p gds-builtin-dark-color-themes theme))))
-
